@@ -1,0 +1,6 @@
+#labels Featured
+Systemdefinition
+
+I projekt 1 arbetades en systemdefinition utefter VATOFA fram som här är något förändrad:
+
+Systemet kommer både att utvecklas och användas av studerande vid svenska lärosäten med normal eller hög kunskap om datorer och systemutveckling. Genom ökad planering, kontroll och uppföljning skall användaren t.ex. bättre kunna styra och prioritera inköp eller avgöra hur mycket tid som skall läggas på extrajobb. Systemet skall fungera på vanliga persondatorer och en avskalad version skall i framtiden kunna användas på de populäraste typerna av Smartphones. Funktioner som budgetering, registrering av köp, övervakning av sin egna ekonomiska status och uppföljning bildar ett verktyg och beslutsstöd för bättre skötsel av privatekonomin. De viktigaste objekten är Bugetpost, Transaktion och Period.
