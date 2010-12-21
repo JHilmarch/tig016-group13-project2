@@ -1,0 +1,43 @@
+#labels Phase-Requirements
+En lista på funktioner och dess prioritet:
+
+Funktionslista
+Prioritet: Låg-Normal-Hög
+
+Profil
+Öppna profil - Normal
+	Skapa profil - Låg
+Spara profil - Låg
+
+Stäng profil - Låg
+
+Period
+Öppna period - Normal
+
+Skapa ny period - Hög
+
+Kassabok
+Notera händelse - Hög
+
+Skriv kassabok till fil - Låg
+
+Hantera händelser - Normal
+	Ta bort händelser - Normal
+
+	Redigera händelse - Normal
+
+Budget
+Lägg till budgetpost - Hög
+
+Ändra budgetpost - Normal
+
+Ta bort budgetpost(er) - Hög
+
+Hämta budgetposter - Låg
+
+Skriv budget till fil - Låg
+
+Hjälp
+Visa manual - Normal
+
+Visa information om projektet - Hög
