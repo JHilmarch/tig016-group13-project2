@@ -1,10 +1,11 @@
 package test;
 
+import gui.MainFrame;
+
 public class Test
 {
 	public static void main(String[] arg)
 	{
-		System.out.println("From google code to you!");
-		//bananas.
+		MainFrame mainFrame = new MainFrame();
 	}
 }
