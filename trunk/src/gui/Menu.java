@@ -1,71 +1,113 @@
 package gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.*;
 
-public class Menu extends JMenuBar
+public class Menu extends JMenuBar implements ActionListener, ItemListener
 {
 	private static final long serialVersionUID = -5617155576631422259L;
+	
+	private JMenu mnArkiv, mnPeriod, mnHjlp, mnRedigera, mnHjlp_1;
+	private JMenuItem mntmOpenProfile, mntmSaveProfile, mntmCloseProfile,
+	mntmCreatePeriod, mntmOpenPeriod, mntmRegisterVerification,
+	mntmChangeVerification, mntmWriteVerificationsToFile,
+	mntmAddBudgetPost, mntmChangeBudgetPost,
+	mntmDeleteBudgetPost, mntmGetBudgetPosts, mntmWriteBudgetToFile,
+	mntmManual, mntmAbout;
 
 	public Menu()
 	{
-		JMenu mnArkiv = new JMenu("Profil");
+		mnArkiv = new JMenu("Profil");
 		this.add(mnArkiv);
 		
-		JMenuItem mntmStartaNySession = new JMenuItem("\u00D6ppna profil");
-		mnArkiv.add(mntmStartaNySession);
+		mntmOpenProfile = new JMenuItem("\u00D6ppna profil");
+		mntmOpenProfile.setEnabled(true);
+		mntmOpenProfile.addActionListener(this);
+		mnArkiv.add(mntmOpenProfile);
 		
-		JMenuItem mntmSparaSession = new JMenuItem("Spara profil");
-		mnArkiv.add(mntmSparaSession);
+		mntmSaveProfile = new JMenuItem("Spara profil");
+		mntmSaveProfile.setEnabled(false);
+		mnArkiv.add(mntmSaveProfile);
 		
-		JMenuItem mntmAvslutaSession = new JMenuItem("St\u00E4ng profil");
-		mnArkiv.add(mntmAvslutaSession);
+		mntmCloseProfile = new JMenuItem("St\u00E4ng profil");
+		mntmCloseProfile.setEnabled(false);
+		mnArkiv.add(mntmCloseProfile);
 		
-		JMenu mnPeriod = new JMenu("Period");
+		mnPeriod = new JMenu("Period");
 		this.add(mnPeriod);
 		
-		JMenuItem mntmSkapaNyPeriod = new JMenuItem("Skapa ny period");
-		mnPeriod.add(mntmSkapaNyPeriod);
+		mntmCreatePeriod = new JMenuItem("Skapa ny period");
+		mntmCreatePeriod.setEnabled(false);
+		mnPeriod.add(mntmCreatePeriod);
 		
-		JMenuItem mntmppnaBefintligPeriod = new JMenuItem("\u00D6ppna period");
-		mnPeriod.add(mntmppnaBefintligPeriod);
+		mntmOpenPeriod = new JMenuItem("\u00D6ppna period");
+		mntmOpenPeriod.setEnabled(false);
+		mnPeriod.add(mntmOpenPeriod);
 		
-		JMenu mnHjlp = new JMenu("Kassabok");
+		mnHjlp = new JMenu("Kassabok");
 		this.add(mnHjlp);
 		
-		JMenuItem mntmRegistreraHndelse = new JMenuItem("Notera h\u00E4ndelse");
-		mnHjlp.add(mntmRegistreraHndelse);
+		mntmRegisterVerification = new JMenuItem("Notera h\u00E4ndelse");
+		mntmRegisterVerification.setEnabled(false);
+		mnHjlp.add(mntmRegisterVerification);
 		
-		JMenuItem mntmRedigeraHndelse = new JMenuItem("Hantera h\u00E4ndelser");
-		mnHjlp.add(mntmRedigeraHndelse);
+		mntmChangeVerification = new JMenuItem("Hantera h\u00E4ndelser");
+		mntmChangeVerification.setEnabled(false);
+		mnHjlp.add(mntmChangeVerification);
 		
-		JMenuItem menuItem = new JMenuItem("Skriv kassabok till fil");
-		mnHjlp.add(menuItem);
+		mntmWriteVerificationsToFile = new JMenuItem("Skriv kassabok till fil");
+		mntmWriteVerificationsToFile.setEnabled(false);
+		mnHjlp.add(mntmWriteVerificationsToFile);
 		
-		JMenu mnRedigera = new JMenu("Budget");
+		mnRedigera = new JMenu("Budget");
 		this.add(mnRedigera);
 		
-		JMenuItem mntmLggTillBudgetpost = new JMenuItem("L\u00E4gg till budgetpost");
-		mnRedigera.add(mntmLggTillBudgetpost);
+		mntmAddBudgetPost = new JMenuItem("L\u00E4gg till budgetpost");
+		mntmAddBudgetPost.setEnabled(false);
+		mnRedigera.add(mntmAddBudgetPost);
 		
-		JMenuItem mntmndraBudgetpost = new JMenuItem("\u00C4ndra budgetpost");
-		mnRedigera.add(mntmndraBudgetpost);
+		mntmChangeBudgetPost = new JMenuItem("\u00C4ndra budgetpost");
+		mntmChangeBudgetPost.setEnabled(false);
+		mnRedigera.add(mntmChangeBudgetPost);
 		
-		JMenuItem mntmTaBortBudgetpost = new JMenuItem("Ta bort budgetpost(er)");
-		mnRedigera.add(mntmTaBortBudgetpost);
+		mntmDeleteBudgetPost = new JMenuItem("Ta bort budgetpost(er)");
+		mntmDeleteBudgetPost.setEnabled(false);
+		mnRedigera.add(mntmDeleteBudgetPost);
 		
-		JMenuItem mntmHmtaBudgetposter = new JMenuItem("H\u00E4mta budgetposter");
-		mnRedigera.add(mntmHmtaBudgetposter);
+		mntmGetBudgetPosts = new JMenuItem("H\u00E4mta budgetposter");
+		mntmGetBudgetPosts.setEnabled(false);
+		mnRedigera.add(mntmGetBudgetPosts);
 		
-		JMenuItem mntmSkrivBudgetTill = new JMenuItem("Skriv budget till fil");
-		mnRedigera.add(mntmSkrivBudgetTill);
+		mntmWriteBudgetToFile = new JMenuItem("Skriv budget till fil");
+		mntmWriteBudgetToFile.setEnabled(false);
+		mnRedigera.add(mntmWriteBudgetToFile);
 		
-		JMenu mnHjlp_1 = new JMenu("Hj\u00E4lp");
+		mnHjlp_1 = new JMenu("Hj\u00E4lp");
 		this.add(mnHjlp_1);
 		
-		JMenuItem mntmManual = new JMenuItem("Manual");
+		mntmManual = new JMenuItem("Manual");
 		mnHjlp_1.add(mntmManual);
 		
-		JMenuItem mntmOmProjektet = new JMenuItem("Om projektet");
-		mnHjlp_1.add(mntmOmProjektet);
+		mntmAbout = new JMenuItem("Om projektet");
+		mnHjlp_1.add(mntmAbout);
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent item)
+	{
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		JMenuItem source = (JMenuItem)(e.getSource());
+		if(source.getText().equals("\u00D6ppna profil"))
+		{
+			// TODO create and open a new JFrame.
+		}
 	}
 }

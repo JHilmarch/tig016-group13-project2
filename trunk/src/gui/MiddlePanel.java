@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.*;
 
@@ -23,6 +24,9 @@ public class MiddlePanel extends JPanel
 		upperPanel.add(empty);
 		
 		JLabel incomeText = new JLabel("UTGIFTER");
+		Font font = new Font("Arial", Font.BOLD, 13);
+		incomeText.setFont(font);
+		
 		this.add(upperPanel); this.add(incomeText);
 	}
 }
