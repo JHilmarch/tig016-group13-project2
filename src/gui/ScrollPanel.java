@@ -21,12 +21,6 @@ public class ScrollPanel extends JPanel
 		income.setColumnSelectionAllowed(true);
 		income.setFillsViewportHeight(true);
 		income.getSelectionModel().addListSelectionListener(new ColumnListener());
-
-		
-		/*//Vet inte om man skall göra så här. Fungerar inte i alla fall.
-		TableColumn col = income.getColumnModel().getColumn(3);
-		col.setCellRenderer(income.getDefaultRenderer(Boolean.class));
-		col.setCellEditor(income.getDefaultEditor(Boolean.class));*/
 		
 		this.setLayout(new GridLayout(1,1));
 		JScrollPane scrollPane = new JScrollPane(income);

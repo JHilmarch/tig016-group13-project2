@@ -3,16 +3,14 @@ package gui;
 import java.awt.GridLayout;
 import javax.swing.*;
 
-//Ta bort denna texten när onödiga referenser och variabler har städats bort.
 public class MainFrame extends JFrame
 {
 	private static final long serialVersionUID = -4287347866047384672L;
 	
-	Menu menu;
-	ScrollPanel scrollPanel1, scrollPanel2;
-	BottomPanel bottomPanel;
+	private Menu menu;
+	private ScrollPanel scrollPanel1, scrollPanel2;
 	
-	public MainFrame()
+	public void buildGUI()
 	{
 		this.setLayout(new GridLayout(5,1));
 		this.setTitle("Grupp 13 - Budgeteringsverktyg");
