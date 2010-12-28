@@ -3,36 +3,33 @@ package gui;
 import java.awt.GridLayout;
 import javax.swing.*;
 
+//Ta bort denna texten när onödiga referenser och variabler har städats bort.
 public class MainFrame extends JFrame
 {
 	private static final long serialVersionUID = -4287347866047384672L;
-
-	JLabel empty;
 	
-	JPanel topPanel;
+	Menu menu;
+	ScrollPanel scrollPanel1, scrollPanel2;
+	BottomPanel bottomPanel;
 	
-	JScrollPane scrollPane1;
-	
-	JPanel middlePanel, incomeSummary;
-	JLabel sumText1, amountText1, outcomeText1, expenceText;
-	
-	JScrollPane scrollPane2;
-	JTable expence;
-	
-	JPanel bottomPanel, expenceSummary;
-	JLabel sumText2, amountText2, outcomeText2, leftToSpendText, status;
 	public MainFrame()
 	{
 		this.setLayout(new GridLayout(5,1));
 		this.setTitle("Grupp 13 - Budgeteringsverktyg");
 		this.setSize(400,600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setJMenuBar(new Menu());
-		topPanel = new TopPanel();
-		this.add(topPanel);
-		this.add(new ScrollPanel());
+		
+		menu = new Menu();
+		this.setJMenuBar(menu);
+		
+		this.add(new TopPanel());
+		scrollPanel1 = new ScrollPanel();
+		this.add(scrollPanel1);
 		this.add(new MiddlePanel());
-		this.add(new ScrollPanel());
+		scrollPanel2 = new ScrollPanel();
+		this.add(scrollPanel2);
+		this.add(new BottomPanel());
+		
 		this.setVisible(true);
 	}
 }
