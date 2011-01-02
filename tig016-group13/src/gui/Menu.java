@@ -6,6 +6,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.*;
 
+import model.User;
+import model.UserHandler;
+
 public class Menu extends JMenuBar implements ActionListener, ItemListener
 {
 	private static final long serialVersionUID = -5617155576631422259L;
@@ -17,9 +20,11 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 	mntmAddBudgetPost, mntmChangeBudgetPost,
 	mntmDeleteBudgetPost, mntmGetBudgetPosts, mntmWriteBudgetToFile,
 	mntmManual, mntmAbout;
+	private UserHandler uh;
 
-	public Menu()
+	public Menu(UserHandler uh)
 	{
+		this.uh = uh;
 		mnArkiv = new JMenu("Profil");
 		this.add(mnArkiv);
 		
@@ -30,6 +35,7 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 		
 		mntmSaveProfile = new JMenuItem("Spara profil");
 		mntmSaveProfile.setEnabled(false);
+		mntmSaveProfile.addActionListener(this);
 		mnArkiv.add(mntmSaveProfile);
 		
 		mntmCloseProfile = new JMenuItem("St\u00E4ng profil");
@@ -41,10 +47,12 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 		
 		mntmCreatePeriod = new JMenuItem("Skapa ny period");
 		mntmCreatePeriod.setEnabled(false);
+		mntmCreatePeriod.addActionListener(this);
 		mnPeriod.add(mntmCreatePeriod);
 		
 		mntmOpenPeriod = new JMenuItem("\u00D6ppna period");
 		mntmOpenPeriod.setEnabled(false);
+		mntmOpenPeriod.addActionListener(this);
 		mnPeriod.add(mntmOpenPeriod);
 		
 		mnHjlp = new JMenu("Kassabok");
@@ -52,10 +60,12 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 		
 		mntmRegisterVerification = new JMenuItem("Notera h\u00E4ndelse");
 		mntmRegisterVerification.setEnabled(false);
+		mntmRegisterVerification.addActionListener(this);
 		mnHjlp.add(mntmRegisterVerification);
 		
 		mntmChangeVerification = new JMenuItem("Hantera h\u00E4ndelser");
 		mntmChangeVerification.setEnabled(false);
+		mntmChangeVerification.addActionListener(this);
 		mnHjlp.add(mntmChangeVerification);
 		
 		mntmWriteVerificationsToFile = new JMenuItem("Skriv kassabok till fil");
@@ -107,7 +117,26 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 		JMenuItem source = (JMenuItem)(e.getSource());
 		if(source.getText().equals("\u00D6ppna profil"))
 		{
-			JOptionPane.showInputDialog("Var snäll och mata in ditt användarnamn: ");
+			uh.openProfile();
+			mntmSaveProfile.setEnabled(true);
+			mntmCloseProfile.setEnabled(true);
+			mntmCreatePeriod.setEnabled(true);
+			mntmOpenPeriod.setEnabled(true);
+			mntmRegisterVerification.setEnabled(true);
+			mntmChangeVerification.setEnabled(true);
+			mntmWriteVerificationsToFile.setEnabled(true);
+			mntmAddBudgetPost.setEnabled(true);
+			mntmGetBudgetPosts.setEnabled(true);
+			mntmWriteBudgetToFile.setEnabled(true);
+		}
+		
+		else if(source.getText().equals("Skapa ny period"))
+		{
+			uh.getCurrentUser().createNewPeriod();
+		}
+		else if(source.getText().equals("Spara profil"))
+		{
+			uh.getCurrentUser().writeProfileToDisk();
 		}
 	}
 }

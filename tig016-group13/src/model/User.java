@@ -2,6 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -35,9 +37,9 @@ import org.xml.sax.SAXParseException;
 public class User
 {
 	static
-	{	
+	{
 		//creates tree structure.
-		File file = new File("Save\\");
+		File file = new File("Save" + File.separator);
 		file.mkdirs();
 		file = null;
 	}
@@ -128,7 +130,7 @@ public class User
 		this.currentPeriod = currentPeriod;
 	}
 	
-	public boolean writeProfileToDisk(User user)
+	public boolean writeProfileToDisk()
 	{
 		written = true;
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -145,7 +147,7 @@ public class User
 			rootEle.appendChild(rootText);
 			dom.appendChild(rootEle);
 			
-			Element userElement = createUserElement(user);
+			Element userElement = createUserElement(this);
 			rootEle.appendChild(userElement);
 			written = true;
 		}
@@ -161,7 +163,7 @@ public class User
 	    
 	    try
 	    {
-	    	OutputStream outputStream = new FileOutputStream("Save\\" + user.getName() +".xml");
+	    	OutputStream outputStream = new FileOutputStream("Save" + File.separator + getName() +".xml");
 	    	serializer = tfactory.newTransformer();
 	    	
 	        serializer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -604,5 +606,36 @@ public class User
         	verification = new Verification(timeStampRepresentation, timeZone, note, amount);
         }
         return verification;
+	}
+	
+	public void createNewPeriod()
+	{
+		String name = JOptionPane.showInputDialog("Var snäll och mata in periodens namn: ");
+		Period period = new Period(name);
+		periodList.add(period);
+		setCurrentPeriod(period);
+	}
+	
+	public void openPeriod()
+	{
+		Object[] data = new Object[periodList.size()];
+		for(int i = 0; i < periodList.size(); i++)
+		{ 
+		    Period p = periodList.get(i);
+			data[i] = p.getName();
+		}
+		
+		String s = null;
+		while(s == null)
+		{
+			s = (String)JOptionPane.showInputDialog(
+                    null,
+                    "Var vŠnlig och vŠlj period: ",
+                    "…ppna period",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null, data,
+                    data[0]);
+		}
+
 	}
 }
