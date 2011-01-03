@@ -5,16 +5,16 @@ Funktionslista
 Prioritet: Låg-Normal-Hög
 
 Profil
-Öppna profil - Normal
-	Skapa profil - Låg
-Spara profil - Låg
+Öppna profil - Normal IMPLEMENTERAT (Buggar vid tomma listor) 
+	Skapa profil - Låg IMPLEMENTERAT
+Spara profil - Låg IMPLEMENTERAT
 
-Stäng profil - Låg
+Stäng profil - Låg IMPLEMENTERAT
 
 Period
-Öppna period - Normal
+Öppna period - Normal IMPLEMENTERAT
 
-Skapa ny period - Hög
+Skapa ny period - Hög IMPLEMENTERAT
 
 Kassabok
 Notera händelse - Hög
