@@ -6,7 +6,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.*;
 
-import model.User;
 import model.UserHandler;
 
 public class Menu extends JMenuBar implements ActionListener, ItemListener
@@ -14,16 +13,19 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 	private static final long serialVersionUID = -5617155576631422259L;
 	
 	private JMenu mnArkiv, mnPeriod, mnHjlp, mnRedigera, mnHjlp_1;
-	private JMenuItem mntmOpenProfile, mntmSaveProfile, mntmCloseProfile,
+	private JMenuItem mntmOpenProfile, mntmNewProfile, mntmSaveProfile, mntmCloseProfile,
 	mntmCreatePeriod, mntmOpenPeriod, mntmRegisterVerification,
 	mntmChangeVerification, mntmWriteVerificationsToFile,
 	mntmAddBudgetPost, mntmChangeBudgetPost,
 	mntmDeleteBudgetPost, mntmGetBudgetPosts, mntmWriteBudgetToFile,
 	mntmManual, mntmAbout;
 	private UserHandler uh;
+	private boolean postMarked, profileOpen;
 
 	public Menu(UserHandler uh)
 	{
+		postMarked = false;
+		profileOpen = false;
 		this.uh = uh;
 		mnArkiv = new JMenu("Profil");
 		this.add(mnArkiv);
@@ -33,6 +35,11 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 		mntmOpenProfile.addActionListener(this);
 		mnArkiv.add(mntmOpenProfile);
 		
+		mntmNewProfile = new JMenuItem("Ny profil");
+		mntmNewProfile.setEnabled(true);
+		mntmNewProfile.addActionListener(this);
+		mnArkiv.add(mntmNewProfile);
+		
 		mntmSaveProfile = new JMenuItem("Spara profil");
 		mntmSaveProfile.setEnabled(false);
 		mntmSaveProfile.addActionListener(this);
@@ -40,6 +47,7 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 		
 		mntmCloseProfile = new JMenuItem("St\u00E4ng profil");
 		mntmCloseProfile.setEnabled(false);
+		mntmCloseProfile.addActionListener(this);
 		mnArkiv.add(mntmCloseProfile);
 		
 		mnPeriod = new JMenu("Period");
@@ -117,7 +125,54 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 		JMenuItem source = (JMenuItem)(e.getSource());
 		if(source.getText().equals("\u00D6ppna profil"))
 		{
-			uh.openProfile();
+			if(uh.openProfile())
+			{
+				profileOpen = true;
+				setMenuItems();
+			}
+		}
+		
+		else if(source.getText().equals("Ny profil"))
+		{
+			uh.newProfile();
+			uh.updateGUI();
+			profileOpen = true;
+			setMenuItems();
+		}
+		
+		else if(source.getText().equals("Spara profil"))
+		{
+			if(uh.getCurrentUser().writeProfileToDisk())
+			{
+				JOptionPane.showMessageDialog(null, "Profile sparades till disk!");
+			}
+		}
+		
+		else if(source.getText().equals("St\u00E4ng profil"))
+		{
+			uh.closeProfile();
+			profileOpen = false;
+			setMenuItems();
+		}
+		
+		else if(source.getText().equals("Skapa ny period"))
+		{
+			uh.getCurrentUser().createNewPeriod();
+			uh.updateGUI();
+		}
+		
+		else if(source.getText().equals("\u00D6ppna period"))
+		{
+			uh.getCurrentUser().openPeriod();
+			uh.updateGUI();
+		}
+		
+	}
+	
+	private void setMenuItems()
+	{
+		if(profileOpen)
+		{
 			mntmSaveProfile.setEnabled(true);
 			mntmCloseProfile.setEnabled(true);
 			mntmCreatePeriod.setEnabled(true);
@@ -130,13 +185,18 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 			mntmWriteBudgetToFile.setEnabled(true);
 		}
 		
-		else if(source.getText().equals("Skapa ny period"))
+		else
 		{
-			uh.getCurrentUser().createNewPeriod();
-		}
-		else if(source.getText().equals("Spara profil"))
-		{
-			uh.getCurrentUser().writeProfileToDisk();
+			mntmSaveProfile.setEnabled(false);
+			mntmCloseProfile.setEnabled(false);
+			mntmCreatePeriod.setEnabled(false);
+			mntmOpenPeriod.setEnabled(false);
+			mntmRegisterVerification.setEnabled(false);
+			mntmChangeVerification.setEnabled(false);
+			mntmWriteVerificationsToFile.setEnabled(false);
+			mntmAddBudgetPost.setEnabled(false);
+			mntmGetBudgetPosts.setEnabled(false);
+			mntmWriteBudgetToFile.setEnabled(false);
 		}
 	}
 }

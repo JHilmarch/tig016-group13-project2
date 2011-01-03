@@ -2,7 +2,6 @@ package model;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
@@ -14,7 +13,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -377,7 +375,7 @@ public class User
             {
             	readed = false;
             	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden profile.\n" +
-            			"Profilen kommer inte att läsas in tom!","DOCUMENT WARNING!",JOptionPane.WARNING_MESSAGE);
+            			"Profilen kommer inte att lŠsas in tom!","DOKUMENTVARNING!",JOptionPane.WARNING_MESSAGE);
             }
                 
             else
@@ -412,8 +410,9 @@ public class User
                 if(urlElement.getElementsByTagName("path").getLength()==0)
                 {
                 	readed = false;
-                	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden path.\n",
-                			"URL WARNING!",JOptionPane.WARNING_MESSAGE);
+                	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden path.\n" +
+                			"Listan fšrblir tom.",
+                			"URL-VARNING!",JOptionPane.WARNING_MESSAGE);
                 }
                 
                 else
@@ -454,8 +453,8 @@ public class User
         		budgetElement.getElementsByTagName("verifications").getLength()==0)
         {
         	readed = false;
-        	JOptionPane.showMessageDialog(null, "Det saknas attribut en budgetpost.\n" +
-        			"En budgetpost kommer inte att läsas in!","BUDGETPOST WARNING!",JOptionPane.WARNING_MESSAGE);
+        	JOptionPane.showMessageDialog(null, "Det saknas attribut i en budgetpost eller sŒ Šr listan tom.\n" +
+        			"En budgetpost kommer att lŠsas in tom!","BUDGETPOSTVARNING!",JOptionPane.WARNING_MESSAGE);
         }
         
         else
@@ -475,8 +474,8 @@ public class User
             catch(Exception e)
             {
             	readed = false;
-            	JOptionPane.showMessageDialog(null, "Värdet \"amount\" är inte numeriskt!" +
-            			"Värdet skrivs till noll.","BUDGET WARNING!",JOptionPane.WARNING_MESSAGE);
+            	JOptionPane.showMessageDialog(null, "Värdet \"amount\" Šr inte numeriskt!" +
+            			"Värdet skrivs till noll.","BUDGETPOSTVARNING!",JOptionPane.WARNING_MESSAGE);
             	amount = 0;
             }
             
@@ -488,8 +487,8 @@ public class User
             catch(Exception e)
             {
             	readed = false;
-            	JOptionPane.showMessageDialog(null, "Fel i en budgetpost: Värdet \"outcome\" är inte numeriskt!" +
-            			"Värdet skrivs till noll.","BUDGET WARNING!",JOptionPane.WARNING_MESSAGE);
+            	JOptionPane.showMessageDialog(null, "Fel i en budgetpost: VŠrdet \"outcome\" Šr inte numeriskt!" +
+            			"VŠrdet skrivs till noll.","BUDGETPOSTVARNING!",JOptionPane.WARNING_MESSAGE);
             	outcome = 0;
             }
         	
@@ -523,7 +522,7 @@ public class User
         {
         	readed = false;
         	JOptionPane.showMessageDialog(null, "Det saknas attribut i en period.\n" +
-        			"Perioden kommer att läsas in tom!","PERIOD WARNING!",JOptionPane.WARNING_MESSAGE);
+        			"Perioden kommer att lŠsas in tom!","PERIODVARNING!",JOptionPane.WARNING_MESSAGE);
         }
         
         else
@@ -566,7 +565,7 @@ public class User
         {
         	readed = false;
         	JOptionPane.showMessageDialog(null, "Det saknas attribut en verifikation.\n" +
-        			"Verifikationen kommer att läsas in tom!","VERIFICATION WARNING!",JOptionPane.WARNING_MESSAGE);
+        			"Verifikationen kommer att läsas in tom!","VERIFIKATIONSVARNING!",JOptionPane.WARNING_MESSAGE);
         }
         
         else
@@ -584,7 +583,7 @@ public class User
             {
             	readed = false;
             	JOptionPane.showMessageDialog(null, "Värdet \"timeStamp\" är inte numeriskt!" +
-            			"Värdet skrivs till noll.","VERIFICATION WARNING!",JOptionPane.WARNING_MESSAGE);
+            			"Värdet skrivs till noll.","VERIFIKATIONSVARNING!",JOptionPane.WARNING_MESSAGE);
             	timeStampRepresentation = 0;
             }
             
@@ -597,7 +596,7 @@ public class User
             {
             	readed = false;
             	JOptionPane.showMessageDialog(null, "Värdet \"amount\" är inte numeriskt!" +
-            			"Värdet skrivs till noll.","VERIFICATION WARNING!",JOptionPane.WARNING_MESSAGE);
+            			"Värdet skrivs till noll.","VERIFIKATIONSVARNING!",JOptionPane.WARNING_MESSAGE);
             	amount = 0;
             }
             
@@ -610,14 +609,22 @@ public class User
 	
 	public void createNewPeriod()
 	{
-		String name = JOptionPane.showInputDialog("Var snäll och mata in periodens namn: ");
-		Period period = new Period(name);
-		periodList.add(period);
-		setCurrentPeriod(period);
+		String name = JOptionPane.showInputDialog("Var snŠll och mata in periodens namn: ");
+		
+		if(name !=null)
+		{
+			if(name.length() > 1)
+			{
+				Period period = new Period(name);
+				periodList.add(period);
+				setCurrentPeriod(period);
+			}		
+		}
 	}
 	
 	public void openPeriod()
 	{
+		//boolean open = false;
 		Object[] data = new Object[periodList.size()];
 		for(int i = 0; i < periodList.size(); i++)
 		{ 
@@ -625,17 +632,23 @@ public class User
 			data[i] = p.getName();
 		}
 		
-		String s = null;
-		while(s == null)
+		String s = (String)JOptionPane.showInputDialog(
+                null,
+                "Var vŠnlig och vŠlj period: ",
+                "…ppna period",
+                JOptionPane.PLAIN_MESSAGE,
+                null, data,
+                data[0]);
+		
+		if(s != null)
 		{
-			s = (String)JOptionPane.showInputDialog(
-                    null,
-                    "Var vŠnlig och vŠlj period: ",
-                    "…ppna period",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null, data,
-                    data[0]);
+			for(Period p : periodList)
+			{
+				if(p.getName().equals(s))
+				{
+					setCurrentPeriod(p);
+				}
+			}
 		}
-
 	}
 }

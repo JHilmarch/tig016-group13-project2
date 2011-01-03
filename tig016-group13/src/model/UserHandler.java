@@ -1,62 +1,64 @@
 package model;
 
+import gui.MainFrame;
+
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.TimeZone;
 
 import javax.swing.JOptionPane;
 
 public class UserHandler
 {
+	private MainFrame mainframe;
 	private User currentUser;
+	private double totBudgetIncome, totOutcomeIncome, totBudgetExpence,
+		totOutcomeExpence, totLeftToSpend;
+	
 	public UserHandler()
 	{
-		ArrayList<Period> aTestPeriodList = new ArrayList<Period>();
-    	
-    	ArrayList<Verification> aTestVerificationList = new ArrayList<Verification>();
-    	
-    	//TimeZone timeStamp, String note, double amount
-    	TimeZone tz = TimeZone.getDefault();
-    	aTestVerificationList.add(new Verification(tz, "en h‰ndelse", 123));
-    	
-    	ArrayList<BudgetPost> aTestIncomeBudgetPostList = new ArrayList<BudgetPost>();
-    	BudgetPost aTestBudgetPost = new BudgetPost("aTestBudgetPost", 3000, aTestVerificationList);
-    	aTestIncomeBudgetPostList.add(aTestBudgetPost);
-    	
-    	ArrayList<BudgetPost> aTestExpenceBudgetPostList = new ArrayList<BudgetPost>();
-    	BudgetPost aTestBudgetPost2 = new BudgetPost("aTestBudgetPost2", 3002, aTestVerificationList);
-    	aTestExpenceBudgetPostList.add(aTestBudgetPost2);
-    	
-    	Period aTestPeriod = new Period("aTestPeriod", aTestIncomeBudgetPostList,
-    			aTestExpenceBudgetPostList);
-    	
-    	aTestPeriodList.add(aTestPeriod);
-    	
-    	//User testUser = new User("aTestUser", aTestPeriodList);
-    	ArrayList<URL> urlList = new ArrayList<URL>();
-    	try {
-			urlList.add(new URL("http://www.testurl.com/testfil.txt"));
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-		currentUser = new User("aTestUser", urlList, aTestPeriodList);
-    	currentUser.setCurrentPeriod(currentUser.getPeriodList().get(0));
+		currentUser = new User();
+		this.mainframe = new MainFrame();
+		mainframe.buildGUI(this);
 	}
 	
+	public double getTotBudgetIncome()
+	{
+		return totBudgetIncome;
+	}
+
+	public double getTotOutcomeIncome() 
+	{
+		return totOutcomeIncome;
+	}
+
+	public double getTotBudgetExpence() 
+	{
+		return totBudgetExpence;
+	}
+
+	public double getTotOutcomeExpence()
+	{
+		return totOutcomeExpence;
+	}
+
+	public double getTotLeftToSpend() 
+	{
+		return totLeftToSpend;
+	}
+
 	public User getCurrentUser()
 	{
 		return currentUser;
 	}
+	
 	public void setCurrentUser(User currentUser)
 	{
 		this.currentUser = currentUser;
 	}
-	public void openProfile()
+	
+	public boolean openProfile()
 	{
+		boolean open = false;
 		File file = new File("Save" + File.separator);
 		String[] content = file.list();
 		ArrayList<String> filenames = new ArrayList<String>();
@@ -73,18 +75,64 @@ public class UserHandler
 		{
 			String s = null;
 			Object[] data = filenames.toArray(); 
-			while(s == null)
+			s = (String)JOptionPane.showInputDialog(
+					null,
+	                "Var vänlig och välj profil: ",
+	                "Öppna profil",
+	                JOptionPane.PLAIN_MESSAGE,
+	                null, data,
+	                data[0]);
+			
+			if(s != null)
 			{
-				s = (String)JOptionPane.showInputDialog(
-	                    null,
-	                    "Var vänlig och välj profil: ",
-	                    "Öppna profil",
-	                    JOptionPane.PLAIN_MESSAGE,
-	                    null, data,
-	                    data[0]);
+				open = true;
+				currentUser = new User();
+				if(currentUser.readUserFromDisk("Save" + File.separator + s))
+				{
+					JOptionPane.showMessageDialog(null, "En ny profil lästes in utan fel!");
+				}
+				mainframe.updateGUI();
 			}
-			currentUser = new User();
-			currentUser.readUserFromDisk("Save" + File.separator + s);
 		}
+		return open;
+	}
+	
+	public void newProfile()
+	{
+		ArrayList<Period> periods = new ArrayList<Period>();
+		currentUser = new User(JOptionPane.showInputDialog(null, "Mata in profilnamn: "), periods);
+	}
+	
+	public void closeProfile()
+	{
+		currentUser = new User();
+		mainframe.updateGUI();
+	}
+	
+	public void countAndSetSum()
+	{
+		totBudgetIncome = 0;
+		totOutcomeIncome = 0;
+		totBudgetExpence = 0;
+		totOutcomeExpence = 0;
+		
+		for(BudgetPost bp : currentUser.getCurrentPeriod().getIncomeBudgetPostList())
+		{
+			totBudgetIncome += bp.getAmount();
+			totOutcomeIncome += bp.getOutcome();
+		}
+		
+		for(BudgetPost bp : currentUser.getCurrentPeriod().getExpenceBudgetPostList())
+		{
+			totBudgetExpence += bp.getAmount();
+			totOutcomeExpence += bp.getOutcome();
+		}
+		
+		totLeftToSpend = totBudgetExpence - totOutcomeExpence;
+	}
+	
+	public void updateGUI()
+	{
+		mainframe.updateGUI();
 	}
 }

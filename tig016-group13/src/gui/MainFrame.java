@@ -1,10 +1,11 @@
 package gui;
 
+import gui.ScrollPanel.Type;
+
 import java.awt.GridLayout;
 
 import javax.swing.*;
 
-import model.User;
 import model.UserHandler;
 
 public class MainFrame extends JFrame
@@ -14,14 +15,13 @@ public class MainFrame extends JFrame
 	private Menu menu;
 	private ScrollPanel scrollPanel1, scrollPanel2;
 	private UserHandler uh;
+	private BottomPanel bPanel;
+	private TopPanel tPanel;
+	private MiddlePanel mPanel;
 	
-	public MainFrame(UserHandler uh)
+	public void buildGUI(UserHandler uh)
 	{
 		this.uh = uh;
-	}
-	
-	public void buildGUI()
-	{
 		this.setLayout(new GridLayout(5,1));
 		this.setTitle("Grupp 13 - Budgeteringsverktyg");
 		this.setSize(400,600);
@@ -30,14 +30,27 @@ public class MainFrame extends JFrame
 		menu = new Menu(uh);
 		this.setJMenuBar(menu);
 		
-		this.add(new TopPanel());
-		scrollPanel1 = new ScrollPanel(uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList());
+		tPanel = new TopPanel();
+		this.add(tPanel);
+		scrollPanel1 = new ScrollPanel(uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList(), Type.INCOME);
 		this.add(scrollPanel1);
-		this.add(new MiddlePanel());
-		scrollPanel2 = new ScrollPanel(uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList());
+		mPanel = new MiddlePanel();
+		this.add(mPanel);
+		scrollPanel2 = new ScrollPanel(uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList(), Type.EXPENCES);
 		this.add(scrollPanel2);
-		this.add(new BottomPanel());
+		bPanel = new BottomPanel();
+		this.add(bPanel);
 		
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+	}
+
+	public void updateGUI()
+	{
+		uh.countAndSetSum();
+		scrollPanel1.updateGUI(uh);
+		scrollPanel2.updateGUI(uh);
+		mPanel.updateGUI(uh);
+		bPanel.updateGUI(uh);
 	}
 }
