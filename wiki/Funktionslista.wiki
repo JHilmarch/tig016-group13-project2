@@ -6,18 +6,18 @@ Prioritet: Låg-Normal-Hög
 
 Profil
 Öppna profil - Normal IMPLEMENTERAT (Buggar vid tomma listor) 
-	Skapa profil - Låg IMPLEMENTERAT
-Spara profil - Låg IMPLEMENTERAT
+	Skapa profil - Låg IMPLEMENTERAD
+Spara profil - Låg IMPLEMENTERAD
 
-Stäng profil - Låg IMPLEMENTERAT
+Stäng profil - Låg IMPLEMENTERAD
 
 Period
-Öppna period - Normal IMPLEMENTERAT
+Öppna period - Normal IMPLEMENTERAD
 
-Skapa ny period - Hög IMPLEMENTERAT
+Skapa ny period - Hög IMPLEMENTERAD
 
 Kassabok
-Notera händelse - Hög
+Notera händelse - Hög IMPLEMENTERAD
 
 Skriv kassabok till fil - Låg
 
