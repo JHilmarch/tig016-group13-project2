@@ -27,7 +27,7 @@ Hantera händelser - Normal
 	Redigera händelse - Normal
 
 Budget
-Lägg till budgetpost - Hög
+Lägg till budgetpost - Hög IMPLEMENTERAD
 
 Ändra budgetpost - Normal
 
