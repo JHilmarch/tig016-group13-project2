@@ -15,6 +15,7 @@ public class BudgetPost
 		this.amount = amount;
 		this.outcome = 0;
 		this.verificationList = verificationList;
+		setOutcome();
 		this.marked = false;
 	}
 
@@ -24,8 +25,9 @@ public class BudgetPost
 		super();
 		this.name = name;
 		this.amount = amount;
-		this.outcome = outcome;
+		this.outcome = 0;
 		this.verificationList = verificationList;
+		setOutcome();
 		this.marked = false;
 	}
 
@@ -54,6 +56,14 @@ public class BudgetPost
 		return outcome;
 	}
 
+	public void setOutcome()
+	{
+		this.outcome = 0;
+		for(Verification v : verificationList)
+		{
+			this.outcome += v.getAmount();
+		}
+	}
 	public void setOutcome(double outcome) 
 	{
 		this.outcome = outcome;
@@ -77,5 +87,10 @@ public class BudgetPost
 	public void setVerificationList(List<Verification> verificationList)
 	{
 		this.verificationList = verificationList;
+	}
+	
+	public void addVerification(Verification ver)
+	{
+		verificationList.add(ver);
 	}
 }

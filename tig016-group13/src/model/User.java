@@ -590,7 +590,7 @@ public class User
             double amount;
             try
             {
-            	amount = Double.parseDouble(amountList.item(0).getFirstChild().getNodeValue());
+            	amount = Double.parseDouble((amountList.item(0).getFirstChild().getNodeValue()));
             }
             catch(Exception e)
             {
@@ -624,7 +624,6 @@ public class User
 	
 	public void openPeriod()
 	{
-		//boolean open = false;
 		Object[] data = new Object[periodList.size()];
 		for(int i = 0; i < periodList.size(); i++)
 		{ 

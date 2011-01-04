@@ -97,10 +97,23 @@ public class UserHandler
 		return open;
 	}
 	
-	public void newProfile()
+	public boolean newProfile()
 	{
+		boolean openProfile;
 		ArrayList<Period> periods = new ArrayList<Period>();
-		currentUser = new User(JOptionPane.showInputDialog(null, "Mata in profilnamn: "), periods);
+		String name = "";
+		name = JOptionPane.showInputDialog(null, "Mata in profilnamn: ");
+		
+		if(name == null)
+		{
+			openProfile = false;
+		}
+		else
+		{
+			currentUser = new User(name, periods);
+			openProfile = true;
+		}
+		return openProfile;
 	}
 	
 	public void closeProfile()

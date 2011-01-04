@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.text.DecimalFormat;
 
 import javax.swing.*;
 
@@ -38,19 +39,21 @@ public class BottomPanel extends JPanel
 		status.setText("Profil: \"" + uh.getCurrentUser().getName() + "\" || Period: \"" +
 				uh.getCurrentUser().getCurrentPeriod().getName() + "\"");
 		
-		amountText.setText(""+uh.getTotBudgetExpence());
-		outcomeText.setText(""+uh.getTotOutcomeExpence());
+		DecimalFormat df = new DecimalFormat("#.##");
+		
+		amountText.setText(""+ df.format(uh.getTotBudgetExpence()));
+		outcomeText.setText(""+ df.format(uh.getTotOutcomeExpence()));
 		
 		if(uh.getTotLeftToSpend() < 0)
 		{
 			leftToSpendText.setForeground(Color.RED);
-			leftToSpendText.setText("Summa spenderat šver budget: " + uh.getTotLeftToSpend());
+			leftToSpendText.setText("Summa spenderat šver budget: " + df.format(uh.getTotLeftToSpend() * -1));
 		}
 		
 		else
 		{
 			leftToSpendText.setForeground(Color.BLACK);
-			leftToSpendText.setText("Kvar att spendera: " + uh.getTotLeftToSpend());
+			leftToSpendText.setText("Kvar att spendera: " + df.format(uh.getTotLeftToSpend()));
 		}
 		
 	}

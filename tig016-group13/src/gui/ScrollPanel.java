@@ -40,7 +40,7 @@ public class ScrollPanel extends JPanel
 	}
 	
 	public void updateGUI(UserHandler uh)
-	{
+	{	
 		if(type == Type.EXPENCES)
 			budgetPosts = uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList();
 		else if(type == Type.INCOME)

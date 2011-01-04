@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.text.DecimalFormat;
+
 import javax.swing.*;
 
 import model.UserHandler;
@@ -36,7 +38,8 @@ public class MiddlePanel extends JPanel
 	
 	public void updateGUI(UserHandler uh)
 	{
-		amount.setText(""+uh.getTotBudgetIncome());
-		outcome.setText(""+uh.getTotOutcomeIncome());
+		DecimalFormat df = new DecimalFormat("#.##");
+		amount.setText(""+ df.format(uh.getTotBudgetIncome()));
+		outcome.setText(""+ df.format(uh.getTotOutcomeIncome()));
 	}
 }

@@ -85,6 +85,7 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 		
 		mntmAddBudgetPost = new JMenuItem("L\u00E4gg till budgetpost");
 		mntmAddBudgetPost.setEnabled(false);
+		mntmAddBudgetPost.addActionListener(this);
 		mnRedigera.add(mntmAddBudgetPost);
 		
 		mntmChangeBudgetPost = new JMenuItem("\u00C4ndra budgetpost");
@@ -129,15 +130,18 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 			{
 				profileOpen = true;
 				setMenuItems();
+				uh.updateGUI();
 			}
 		}
 		
 		else if(source.getText().equals("Ny profil"))
 		{
-			uh.newProfile();
-			uh.updateGUI();
-			profileOpen = true;
-			setMenuItems();
+			if(uh.newProfile())
+			{
+				profileOpen = true;
+				setMenuItems();
+				uh.updateGUI();
+			}
 		}
 		
 		else if(source.getText().equals("Spara profil"))
@@ -165,6 +169,16 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 		{
 			uh.getCurrentUser().openPeriod();
 			uh.updateGUI();
+		}
+		
+		else if(source.getText().equals("Notera h\u00E4ndelse"))
+		{
+			NewVerificationPanel verpanel = new NewVerificationPanel(uh);
+		}
+		
+		else if(source.getText().equals("L\u00E4gg till budgetpost"))
+		{
+			NewBudgetPostPanel bPanel = new NewBudgetPostPanel(uh);
 		}
 		
 	}

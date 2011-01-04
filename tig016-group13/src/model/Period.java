@@ -53,4 +53,13 @@ public class Period
 		this.expenceBudgetPostList = expenceBudgetPostList;
 	}
 	
+	public void addIncomeBudgetPost(BudgetPost bp)
+	{
+		incomeBudgetPostList.add(bp);
+	}
+	
+	public void addExpenceBudgetPost(BudgetPost bp)
+	{
+		expenceBudgetPostList.add(bp);
+	}
 }
