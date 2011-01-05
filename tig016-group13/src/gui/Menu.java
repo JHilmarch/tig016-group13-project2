@@ -111,6 +111,7 @@ public class Menu extends JMenuBar implements ActionListener
 		
 		mntmManual = new JMenuItem("Manual");
 		mntmManual.setEnabled(true);
+		mntmManual.addActionListener(this);
 		mnHjlp_1.add(mntmManual);
 		
 		mntmAbout = new JMenuItem("Om projektet");
@@ -192,6 +193,11 @@ public class Menu extends JMenuBar implements ActionListener
 		else if(e.getActionCommand().equals("Om projektet"))
 		{
 			HelpFunctions.openURL("http://code.google.com/p/tig016-group13-project2/");
+		}
+		
+		else if(e.getActionCommand().equals("Manual"))
+		{
+			HelpFunctions.openPDF();
 		}
 	}
 	

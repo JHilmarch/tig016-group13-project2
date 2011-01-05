@@ -1,5 +1,7 @@
 package util;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.util.Arrays;
 
 import javax.swing.JOptionPane;
@@ -95,4 +97,21 @@ public class HelpFunctions
 	         }
 	      }
 	   }
+	
+	public static void openPDF()
+	{
+		File dir = new File(".");
+		String dirText = "";
+		try
+		{
+			dirText = dir.getCanonicalPath();
+			Desktop d = java.awt.Desktop.getDesktop();  
+			d.open (new java.io.File (dirText + File.separator + "Manual.pdf"));
+		}
+		
+		catch (Exception e)
+		{
+			System.out.println("Error" + e );
+		}
+	}
 }
