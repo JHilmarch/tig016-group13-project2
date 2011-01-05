@@ -21,10 +21,10 @@ Notera händelse - Hög IMPLEMENTERAD
 
 Skriv kassabok till fil - Låg
 
-Hantera händelser - Normal
-	Ta bort händelser - Normal
+Händelser
+Ta bort händelser - Normal
 
-	Redigera händelse - Normal
+Redigera händelse - Normal IMPLEMENTERAD
 
 Budget
 Lägg till budgetpost - Hög IMPLEMENTERAD
