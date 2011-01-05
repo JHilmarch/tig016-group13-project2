@@ -170,6 +170,11 @@ public class Menu extends JMenuBar implements ActionListener
 			NewVerificationPanel verpanel = new NewVerificationPanel(uh);
 		}
 		
+		else if(e.getActionCommand().equals("Hantera h\u00E4ndelser"))
+		{
+			ManageVerification manPanel = new ManageVerification(uh);
+		}
+		
 		else if(e.getActionCommand().equals("L\u00E4gg till budgetpost"))
 		{
 			NewBudgetPostPanel bPanel = new NewBudgetPostPanel(uh);
