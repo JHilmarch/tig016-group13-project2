@@ -32,11 +32,11 @@ public class MainFrame extends JFrame
 		
 		tPanel = new TopPanel();
 		this.add(tPanel);
-		scrollPanel1 = new ScrollPanel(uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList(), Type.INCOME);
+		scrollPanel1 = new ScrollPanel(uh, uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList(), Type.INCOME);
 		this.add(scrollPanel1);
 		mPanel = new MiddlePanel();
 		this.add(mPanel);
-		scrollPanel2 = new ScrollPanel(uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList(), Type.EXPENCES);
+		scrollPanel2 = new ScrollPanel(uh, uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList(), Type.EXPENCES);
 		this.add(scrollPanel2);
 		bPanel = new BottomPanel();
 		this.add(bPanel);
@@ -47,9 +47,10 @@ public class MainFrame extends JFrame
 
 	public void updateGUI()
 	{
+		menu.setMenuItems();
 		uh.countAndSetSum();
-		scrollPanel1.updateGUI(uh);
-		scrollPanel2.updateGUI(uh);
+		scrollPanel1.updateGUI();
+		scrollPanel2.updateGUI();
 		mPanel.updateGUI(uh);
 		bPanel.updateGUI(uh);
 	}

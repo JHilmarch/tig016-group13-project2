@@ -375,7 +375,7 @@ public class User
             {
             	readed = false;
             	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden profile.\n" +
-            			"Profilen kommer inte att läsas in tom!","DOKUMENTVARNING!",JOptionPane.WARNING_MESSAGE);
+            			"Profilen kan läsas in fel!","DOKUMENTVARNING!",JOptionPane.WARNING_MESSAGE);
             }
                 
             else
@@ -395,47 +395,82 @@ public class User
 		return user;
 	}
 	
-	private ArrayList<URL> readURLs(NodeList urls) throws MalformedURLException
+	private ArrayList<URL> readURLs(NodeList urlsNodeList) throws MalformedURLException
 	{
 		ArrayList<URL> listOfURLs = new ArrayList<URL>();
-        
-        for(int i=0; i<urls.getLength() ; i++)
+		
+		Node urlsNode = urlsNodeList.item(0);
+        if(urlsNode.getNodeType() == Node.ELEMENT_NODE)
         {
-            Node URLNode = urls.item(i);
-            if(URLNode.getNodeType() == Node.ELEMENT_NODE)
-            {
-            	//Saves the attributes in lists for the node url (childnode to urls).
-                Element urlElement = (Element)URLNode;
+        	Element urlsElement = (Element)urlsNode;
+        	
+        	if(urlsElement.getElementsByTagName("url").getLength()==0)
+        	{
+        		readed = false;
+            	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden urls.\n" +
+            			"Profilen kan läsas in fel!","URLSWARNING!",JOptionPane.WARNING_MESSAGE);
+        	}
+        	
+        	else
+        	{
+        		NodeList urls = urlsElement.getElementsByTagName("url");
                 
-                if(urlElement.getElementsByTagName("path").getLength()==0)
+                for(int i=0; i<urls.getLength() ; i++)
                 {
-                	readed = false;
-                	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden path.\n" +
-                			"Listan förblir tom.",
-                			"URL-VARNING!",JOptionPane.WARNING_MESSAGE);
+                    Node URLNode = urls.item(i);
+                    if(URLNode.getNodeType() == Node.ELEMENT_NODE)
+                    {
+                    	//Saves the attributes in lists for the node url (childnode to urls).
+                        Element urlElement = (Element)URLNode;
+                        
+                        if(urlElement.getElementsByTagName("path").getLength()==0)
+                        {
+                        	readed = false;
+                        	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden path.\n" +
+                        			"Listan förblir tom.",
+                        			"URL-VARNING!",JOptionPane.WARNING_MESSAGE);
+                        }
+                        
+                        else
+                        {
+                        	NodeList contactNameList = urlElement.getElementsByTagName("path");
+                            
+                            String urlPath = contactNameList.item(0).getFirstChild().getNodeValue();
+                            URL url = new URL(urlPath);
+                            listOfURLs.add(url);
+                        }      
+                    }
                 }
-                
-                else
-                {
-                	NodeList contactNameList = urlElement.getElementsByTagName("path");
-                    
-                    String urlPath = contactNameList.item(0).getFirstChild().getNodeValue();
-                    URL url = new URL(urlPath);
-                    listOfURLs.add(url);
-                }      
-            }
+        	}
         }
 		return listOfURLs;
 	}
 	
-	private ArrayList<BudgetPost> readBudgetPosts(NodeList budgetPosts)
+	private ArrayList<BudgetPost> readBudgetPosts(NodeList budgetPostsNodeList)
 	{
 		ArrayList<BudgetPost> listOfBudgetPosts = new ArrayList<BudgetPost>();
 		
-		for(int i=0; i<budgetPosts.getLength() ; i++)
+		Node budgetPostsNode = budgetPostsNodeList.item(0);
+        if(budgetPostsNode.getNodeType() == Node.ELEMENT_NODE)
         {
-			BudgetPost budgetPost = readBudgetPost((Node)budgetPosts.item(i));
-			listOfBudgetPosts.add(budgetPost);
+        	Element budgetPostsElement = (Element)budgetPostsNode;
+        	
+        	if(budgetPostsElement.getElementsByTagName("budgetPost").getLength()==0)
+        	{
+        		readed = false;
+            	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden budgetPost.\n" +
+            			"Profilen kan läsas in fel!","BUDGETPOSTVARNING!",JOptionPane.WARNING_MESSAGE);
+        	}
+        	
+        	else
+        	{
+        		NodeList budgetPosts = budgetPostsElement.getElementsByTagName("budgetPost");
+        		for(int i=0; i<budgetPosts.getLength() ; i++)
+                {
+        			BudgetPost budgetPost = readBudgetPost((Node)budgetPosts.item(i));
+        			listOfBudgetPosts.add(budgetPost);
+                }
+        	}
         }
 		return listOfBudgetPosts;
 	}
@@ -499,14 +534,32 @@ public class User
         return budgetPost;
 	}
 	
-	private ArrayList<Period> readPeriods(NodeList periods)
+	private ArrayList<Period> readPeriods(NodeList periodsNodeList)
 	{
+		
 		ArrayList<Period> listOfPeriods = new ArrayList<Period>();
 		
-		for(int i=0; i<periods.getLength() ; i++)
+		Node periodsNode = periodsNodeList.item(0);
+        if(periodsNode.getNodeType() == Node.ELEMENT_NODE)
         {
-			Period period = readPeriod((Node)periods.item(i));
-            listOfPeriods.add(period);
+        	Element periodsElement = (Element)periodsNode;
+        	
+        	if(periodsElement.getElementsByTagName("period").getLength()==0)
+        	{
+        		readed = false;
+            	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden period.\n" +
+            			"Profilen kan läsas in fel!","PERIODVARNING!",JOptionPane.WARNING_MESSAGE);
+        	}
+        	
+        	else
+        	{
+        		NodeList periods = periodsElement.getElementsByTagName("period");
+        		for(int i=0; i<periods.getLength() ; i++)
+                {
+        			Period period = readPeriod((Node)periods.item(i));
+                    listOfPeriods.add(period);
+                }	
+        	}
         }		
 		return listOfPeriods;
 	}
@@ -540,15 +593,33 @@ public class User
         return period;
 	}
 	
-	private ArrayList<Verification> readVerifications(NodeList verifications)
+	private ArrayList<Verification> readVerifications(NodeList verificationsNodeList)
 	{
 		ArrayList<Verification> listOfVerifications = new ArrayList<Verification>();
 		
-		for(int i=0; i<verifications.getLength() ; i++)
+		Node verificationsNode = verificationsNodeList.item(0);
+        if(verificationsNode.getNodeType() == Node.ELEMENT_NODE)
         {
-			Verification verification = readVerification((Node)verifications.item(i));
-			listOfVerifications.add(verification);
-        }		
+        	Element verificationsElement = (Element)verificationsNode;
+        	
+        	if(verificationsElement.getElementsByTagName("verification").getLength()==0)
+        	{
+        		readed = false;
+            	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden verification.\n" +
+            			"Profilen kan läsas in fel!","VERIFIKATIONSVARNING!",JOptionPane.WARNING_MESSAGE);
+        	}
+        	
+        	else
+        	{
+        		NodeList verifications = verificationsElement.getElementsByTagName("verification");
+        		
+        		for(int i=0; i<verifications.getLength() ; i++)
+                {
+        			Verification verification = readVerification((Node)verifications.item(i));
+        			listOfVerifications.add(verification);
+                }		
+        	}
+        }
 		return listOfVerifications;
 	}
 	
@@ -613,7 +684,7 @@ public class User
 		
 		if(name !=null)
 		{
-			if(name.length() > 1)
+			if(name.length() >= 1)
 			{
 				Period period = new Period(name);
 				periodList.add(period);

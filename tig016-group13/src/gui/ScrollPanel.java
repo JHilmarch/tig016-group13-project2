@@ -4,8 +4,8 @@ import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 
 import model.BudgetPost;
@@ -17,14 +17,16 @@ public class ScrollPanel extends JPanel
 	private JTable table;
 	private List<BudgetPost> budgetPosts;
 	private Type type;
+	private UserHandler uh;
 	
 	public enum Type
 	{
 		INCOME, EXPENCES
 	}
 
-	public ScrollPanel(List<BudgetPost> budgetPosts, Type type)
+	public ScrollPanel(UserHandler uh, List<BudgetPost> budgetPosts, Type type)
 	{
+		this.uh = uh;
 		this.type = type;
 		this.budgetPosts = budgetPosts;
 		table = new JTable(new BooleanTableModel(this.budgetPosts));
@@ -32,14 +34,13 @@ public class ScrollPanel extends JPanel
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setColumnSelectionAllowed(true);
 		table.setFillsViewportHeight(true);
-		table.getSelectionModel().addListSelectionListener(new ColumnListener());
 		
 		this.setLayout(new GridLayout(1,1));
 		JScrollPane scrollPane = new JScrollPane(table);
 		this.add(scrollPane);
 	}
 	
-	public void updateGUI(UserHandler uh)
+	public void updateGUI()
 	{	
 		if(type == Type.EXPENCES)
 			budgetPosts = uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList();
@@ -47,24 +48,14 @@ public class ScrollPanel extends JPanel
 			budgetPosts = uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList();
 		table.setModel(new BooleanTableModel(this.budgetPosts));
 	}
-
-	private class ColumnListener implements ListSelectionListener
-	{
-        public void valueChanged(ListSelectionEvent event)
-        {
-            if (event.getValueIsAdjusting())
-            {
-                return;
-            }
-        }
-    }
 	
-	private class BooleanTableModel extends AbstractTableModel
+	private class BooleanTableModel extends AbstractTableModel implements TableModelListener
 	{
 		List<BudgetPost> ver;
 		Object[][] data;
 		public BooleanTableModel(List<BudgetPost> ver)
 		{
+			this.addTableModelListener(this);
 			this.ver = ver;
 			this.data = setDataModel();
 		}
@@ -129,6 +120,38 @@ public class ScrollPanel extends JPanel
 	    public Class<?> getColumnClass(int columnIndex) {
 	        return data[0][columnIndex].getClass();
 	    }
+	    
+		public void tableChanged(TableModelEvent e)
+		{
+			int row = e.getFirstRow();
+	        int column = e.getColumn();
+	        TableModel model = (TableModel)e.getSource();
+	        Object data = model.getValueAt(row, column);
+	        System.out.println("DATA CHANGE: " + data);
+	        
+	        if(column == 3)
+	        {
+	        	if(type == Type.EXPENCES)
+	        	{
+	        		System.out.println("EXPENCE Fšre: " +
+	        				uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList().get(row).isMarked());
+	        		uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList().get(row).setMarked((Boolean)data);
+	        		System.out.println("EXPENCE Efter: " +
+	        				uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList().get(row).isMarked());
+	        	}
+	        	
+	        	else if(type == Type.INCOME)
+	        	{
+	        		System.out.println("INCOME Fšre: " +
+	        				uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList().get(row).isMarked());
+	        		uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList().get(row).setMarked((Boolean)data);
+	        		System.out.println("INCOME Efter: " +
+	        				uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList().get(row).isMarked());
+	        	}
+	        	
+	        	uh.updateGUI();
+	        }
+		}
 
 	}
 }

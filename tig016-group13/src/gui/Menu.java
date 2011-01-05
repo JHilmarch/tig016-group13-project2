@@ -6,9 +6,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.*;
 
+import model.BudgetPost;
 import model.UserHandler;
 
-public class Menu extends JMenuBar implements ActionListener, ItemListener
+public class Menu extends JMenuBar implements ActionListener
 {
 	private static final long serialVersionUID = -5617155576631422259L;
 	
@@ -115,12 +116,6 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 	}
 
 	@Override
-	public void itemStateChanged(ItemEvent item)
-	{
-		
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		JMenuItem source = (JMenuItem)(e.getSource());
@@ -183,7 +178,7 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 		
 	}
 	
-	private void setMenuItems()
+	public void setMenuItems()
 	{
 		if(profileOpen)
 		{
@@ -211,6 +206,32 @@ public class Menu extends JMenuBar implements ActionListener, ItemListener
 			mntmAddBudgetPost.setEnabled(false);
 			mntmGetBudgetPosts.setEnabled(false);
 			mntmWriteBudgetToFile.setEnabled(false);
+		}
+		
+		boolean marked = false;
+		for(BudgetPost bp : uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList())
+		{
+			if(bp.isMarked()==true)
+			{
+				marked = true;
+			}
+		}
+		for(BudgetPost bp : uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList())
+		{
+			if(bp.isMarked()==true)
+			{
+				marked = true;
+			}
+		}
+		if(marked)
+		{
+			mntmChangeBudgetPost.setEnabled(true);
+			mntmDeleteBudgetPost.setEnabled(true);
+		}
+		else
+		{
+			mntmChangeBudgetPost.setEnabled(false);
+			mntmDeleteBudgetPost.setEnabled(false);
 		}
 	}
 }
