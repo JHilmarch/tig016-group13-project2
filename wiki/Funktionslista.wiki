@@ -40,4 +40,4 @@ Skriv budget till fil - Låg
 Hjälp
 Visa manual - Normal
 
-Visa information om projektet - Hög
+Visa information om projektet - Hög IMPLEMENTERAD
