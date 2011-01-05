@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import util.HelpFunctions;
+
 import model.BudgetPost;
 import model.UserHandler;
 
@@ -104,12 +106,16 @@ public class Menu extends JMenuBar implements ActionListener
 		mnRedigera.add(mntmWriteBudgetToFile);
 		
 		mnHjlp_1 = new JMenu("Hj\u00E4lp");
+		mnHjlp_1.setEnabled(true);
 		this.add(mnHjlp_1);
 		
 		mntmManual = new JMenuItem("Manual");
+		mntmManual.setEnabled(true);
 		mnHjlp_1.add(mntmManual);
 		
 		mntmAbout = new JMenuItem("Om projektet");
+		mntmAbout.setEnabled(true);
+		mntmAbout.addActionListener(this);
 		mnHjlp_1.add(mntmAbout);
 	}
 
@@ -181,6 +187,11 @@ public class Menu extends JMenuBar implements ActionListener
 				uh.getCurrentUser().getCurrentPeriod().deleteMarkedIncomeBudgetPosts();
 				uh.updateGUI();
 			}
+		}
+		
+		else if(e.getActionCommand().equals("Om projektet"))
+		{
+			HelpFunctions.openURL("http://code.google.com/p/tig016-group13-project2/");
 		}
 	}
 	
