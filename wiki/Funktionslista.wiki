@@ -31,7 +31,7 @@ Lägg till budgetpost - Hög IMPLEMENTERAD
 
 Ändra budgetpost - Normal
 
-Ta bort budgetpost(er) - Hög
+Ta bort budgetpost(er) - Hög IMPLEMENTERAD
 
 Hämta budgetposter - Låg
 
