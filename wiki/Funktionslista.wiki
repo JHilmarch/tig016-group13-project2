@@ -29,7 +29,7 @@ Hantera händelser - Normal
 Budget
 Lägg till budgetpost - Hög IMPLEMENTERAD
 
-Ändra budgetpost - Normal
+Ändra budgetposter - Normal IMPLEMENTERAD
 
 Ta bort budgetpost(er) - Hög IMPLEMENTERAD
 
