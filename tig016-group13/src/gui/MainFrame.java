@@ -47,11 +47,11 @@ public class MainFrame extends JFrame
 
 	public void updateGUI()
 	{
-		menu.setMenuItems();
 		uh.countAndSetSum();
 		scrollPanel1.updateGUI();
 		scrollPanel2.updateGUI();
 		mPanel.updateGUI(uh);
 		bPanel.updateGUI(uh);
+		menu.setMenuItems();
 	}
 }

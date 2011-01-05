@@ -2,8 +2,6 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import javax.swing.*;
 
 import model.BudgetPost;
@@ -21,11 +19,10 @@ public class Menu extends JMenuBar implements ActionListener
 	mntmDeleteBudgetPost, mntmGetBudgetPosts, mntmWriteBudgetToFile,
 	mntmManual, mntmAbout;
 	private UserHandler uh;
-	private boolean postMarked, profileOpen;
+	private boolean profileOpen;
 
 	public Menu(UserHandler uh)
 	{
-		postMarked = false;
 		profileOpen = false;
 		this.uh = uh;
 		mnArkiv = new JMenu("Profil");
@@ -94,6 +91,7 @@ public class Menu extends JMenuBar implements ActionListener
 		mnRedigera.add(mntmChangeBudgetPost);
 		
 		mntmDeleteBudgetPost = new JMenuItem("Ta bort budgetpost(er)");
+		mntmDeleteBudgetPost.addActionListener(this);
 		mntmDeleteBudgetPost.setEnabled(false);
 		mnRedigera.add(mntmDeleteBudgetPost);
 		
@@ -115,11 +113,9 @@ public class Menu extends JMenuBar implements ActionListener
 		mnHjlp_1.add(mntmAbout);
 	}
 
-	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		JMenuItem source = (JMenuItem)(e.getSource());
-		if(source.getText().equals("\u00D6ppna profil"))
+		if(e.getActionCommand().equals("\u00D6ppna profil"))
 		{
 			if(uh.openProfile())
 			{
@@ -129,7 +125,7 @@ public class Menu extends JMenuBar implements ActionListener
 			}
 		}
 		
-		else if(source.getText().equals("Ny profil"))
+		else if(e.getActionCommand().equals("Ny profil"))
 		{
 			if(uh.newProfile())
 			{
@@ -139,7 +135,7 @@ public class Menu extends JMenuBar implements ActionListener
 			}
 		}
 		
-		else if(source.getText().equals("Spara profil"))
+		else if(e.getActionCommand().equals("Spara profil"))
 		{
 			if(uh.getCurrentUser().writeProfileToDisk())
 			{
@@ -147,35 +143,45 @@ public class Menu extends JMenuBar implements ActionListener
 			}
 		}
 		
-		else if(source.getText().equals("St\u00E4ng profil"))
+		else if(e.getActionCommand().equals("St\u00E4ng profil"))
 		{
 			uh.closeProfile();
 			profileOpen = false;
-			setMenuItems();
+			uh.updateGUI();
 		}
 		
-		else if(source.getText().equals("Skapa ny period"))
+		else if(e.getActionCommand().equals("Skapa ny period"))
 		{
 			uh.getCurrentUser().createNewPeriod();
 			uh.updateGUI();
 		}
 		
-		else if(source.getText().equals("\u00D6ppna period"))
+		else if(e.getActionCommand().equals("\u00D6ppna period"))
 		{
 			uh.getCurrentUser().openPeriod();
 			uh.updateGUI();
 		}
 		
-		else if(source.getText().equals("Notera h\u00E4ndelse"))
+		else if(e.getActionCommand().equals("Notera h\u00E4ndelse"))
 		{
 			NewVerificationPanel verpanel = new NewVerificationPanel(uh);
 		}
 		
-		else if(source.getText().equals("L\u00E4gg till budgetpost"))
+		else if(e.getActionCommand().equals("L\u00E4gg till budgetpost"))
 		{
 			NewBudgetPostPanel bPanel = new NewBudgetPostPanel(uh);
 		}
 		
+		else if(e.getActionCommand().equals("Ta bort budgetpost(er)"))
+		{
+			if(JOptionPane.showConfirmDialog(null, "Vill du verkligen ta bort budgetposterna?",
+					"Bekräfta val", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
+			{
+				uh.getCurrentUser().getCurrentPeriod().deleteMarkedExpenceBudgetPosts();
+				uh.getCurrentUser().getCurrentPeriod().deleteMarkedIncomeBudgetPosts();
+				uh.updateGUI();
+			}
+		}
 	}
 	
 	public void setMenuItems()

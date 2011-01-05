@@ -62,4 +62,32 @@ public class Period
 	{
 		expenceBudgetPostList.add(bp);
 	}
+	
+	public void deleteMarkedIncomeBudgetPosts()
+	{	
+		ArrayList<BudgetPost> tempList = new ArrayList<BudgetPost>();
+		for(int i = 0; i < incomeBudgetPostList.size(); i++)
+		{
+			if(incomeBudgetPostList.get(i).isMarked()==true)
+			{
+				tempList.add(incomeBudgetPostList.get(i));
+			}
+		}
+		
+		incomeBudgetPostList.removeAll(tempList);
+	}
+	
+	public void deleteMarkedExpenceBudgetPosts()
+	{
+		ArrayList<BudgetPost> tempList = new ArrayList<BudgetPost>();
+		for(int i = 0; i < expenceBudgetPostList.size(); i++)
+		{
+			if(expenceBudgetPostList.get(i).isMarked()==true)
+			{
+				tempList.add(expenceBudgetPostList.get(i));
+			}
+		}
+		
+		expenceBudgetPostList.removeAll(tempList);
+	}
 }

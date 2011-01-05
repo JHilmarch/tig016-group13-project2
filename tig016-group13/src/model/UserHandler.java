@@ -91,7 +91,6 @@ public class UserHandler
 				{
 					JOptionPane.showMessageDialog(null, "En ny profil lästes in utan fel!");
 				}
-				mainframe.updateGUI();
 			}
 		}
 		return open;
