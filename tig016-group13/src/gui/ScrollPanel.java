@@ -127,26 +127,17 @@ public class ScrollPanel extends JPanel
 	        int column = e.getColumn();
 	        TableModel model = (TableModel)e.getSource();
 	        Object data = model.getValueAt(row, column);
-	        System.out.println("DATA CHANGE: " + data);
 	        
 	        if(column == 3)
 	        {
 	        	if(type == Type.EXPENCES)
 	        	{
-	        		System.out.println("EXPENCE Fšre: " +
-	        				uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList().get(row).isMarked());
 	        		uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList().get(row).setMarked((Boolean)data);
-	        		System.out.println("EXPENCE Efter: " +
-	        				uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList().get(row).isMarked());
 	        	}
 	        	
 	        	else if(type == Type.INCOME)
 	        	{
-	        		System.out.println("INCOME Fšre: " +
-	        				uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList().get(row).isMarked());
 	        		uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList().get(row).setMarked((Boolean)data);
-	        		System.out.println("INCOME Efter: " +
-	        				uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList().get(row).isMarked());
 	        	}
 	        	
 	        	uh.updateGUI();

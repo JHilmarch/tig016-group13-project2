@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class Period
 {
 	private String name;
@@ -89,5 +91,37 @@ public class Period
 		}
 		
 		expenceBudgetPostList.removeAll(tempList);
+	}
+	
+	public void changeMarkedIncomeBudgetPosts()
+	{
+		for(int i = 0; i < incomeBudgetPostList.size(); i++)
+		{
+			if(incomeBudgetPostList.get(i).isMarked()==true)
+			{
+				String newName = JOptionPane.showInputDialog("" +
+						"Mata in ett nytt namn fšr budgetpost " +
+						incomeBudgetPostList.get(i).getName());
+				if(newName==null)
+					newName = incomeBudgetPostList.get(i).getName();
+				incomeBudgetPostList.get(i).setName(newName);
+			}
+		}
+	}
+	
+	public void changeMarkedExpenceBudgetPosts()
+	{
+		for(int i = 0; i < expenceBudgetPostList.size(); i++)
+		{
+			if(expenceBudgetPostList.get(i).isMarked()==true)
+			{
+				String newName = JOptionPane.showInputDialog("" +
+						"Mata in ett nytt namn fšr budgetpost " +
+						expenceBudgetPostList.get(i).getName());
+				if(newName==null)
+					newName = expenceBudgetPostList.get(i).getName();
+				expenceBudgetPostList.get(i).setName(newName);
+			}
+		}
 	}
 }

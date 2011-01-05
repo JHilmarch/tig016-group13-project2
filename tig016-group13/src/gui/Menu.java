@@ -88,8 +88,9 @@ public class Menu extends JMenuBar implements ActionListener
 		mntmAddBudgetPost.addActionListener(this);
 		mnRedigera.add(mntmAddBudgetPost);
 		
-		mntmChangeBudgetPost = new JMenuItem("\u00C4ndra budgetpost");
+		mntmChangeBudgetPost = new JMenuItem("\u00C4ndra budgetpost(er)");
 		mntmChangeBudgetPost.setEnabled(false);
+		mntmChangeBudgetPost.addActionListener(this);
 		mnRedigera.add(mntmChangeBudgetPost);
 		
 		mntmDeleteBudgetPost = new JMenuItem("Ta bort budgetpost(er)");
@@ -128,7 +129,6 @@ public class Menu extends JMenuBar implements ActionListener
 			{
 				profileOpen = true;
 				setMenuItems();
-				uh.updateGUI();
 			}
 		}
 		
@@ -138,7 +138,6 @@ public class Menu extends JMenuBar implements ActionListener
 			{
 				profileOpen = true;
 				setMenuItems();
-				uh.updateGUI();
 			}
 		}
 		
@@ -154,19 +153,16 @@ public class Menu extends JMenuBar implements ActionListener
 		{
 			uh.closeProfile();
 			profileOpen = false;
-			uh.updateGUI();
 		}
 		
 		else if(e.getActionCommand().equals("Skapa ny period"))
 		{
 			uh.getCurrentUser().createNewPeriod();
-			uh.updateGUI();
 		}
 		
 		else if(e.getActionCommand().equals("\u00D6ppna period"))
 		{
 			uh.getCurrentUser().openPeriod();
-			uh.updateGUI();
 		}
 		
 		else if(e.getActionCommand().equals("Notera h\u00E4ndelse"))
@@ -179,6 +175,12 @@ public class Menu extends JMenuBar implements ActionListener
 			NewBudgetPostPanel bPanel = new NewBudgetPostPanel(uh);
 		}
 		
+		else if(e.getActionCommand().equals("\u00C4ndra budgetpost(er)"))
+		{
+			uh.getCurrentUser().getCurrentPeriod().changeMarkedExpenceBudgetPosts();
+			uh.getCurrentUser().getCurrentPeriod().changeMarkedIncomeBudgetPosts();
+		}
+		
 		else if(e.getActionCommand().equals("Ta bort budgetpost(er)"))
 		{
 			if(JOptionPane.showConfirmDialog(null, "Vill du verkligen ta bort budgetposterna?",
@@ -186,7 +188,6 @@ public class Menu extends JMenuBar implements ActionListener
 			{
 				uh.getCurrentUser().getCurrentPeriod().deleteMarkedExpenceBudgetPosts();
 				uh.getCurrentUser().getCurrentPeriod().deleteMarkedIncomeBudgetPosts();
-				uh.updateGUI();
 			}
 		}
 		
@@ -199,6 +200,8 @@ public class Menu extends JMenuBar implements ActionListener
 		{
 			HelpFunctions.openPDF();
 		}
+		
+		uh.updateGUI();
 	}
 	
 	public void setMenuItems()
