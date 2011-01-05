@@ -38,6 +38,6 @@ Hämta budgetposter - Låg
 Skriv budget till fil - Låg
 
 Hjälp
-Visa manual - Normal
+Visa manual - Normal IMPLEMENTERAD
 
 Visa information om projektet - Hög IMPLEMENTERAD
