@@ -1,14 +1,15 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
-public class Period
+import util.HelpFunctions;
+
+public class Period implements Cloneable
 {
 	private String name;
-	private List<BudgetPost> incomeBudgetPostList, expenceBudgetPostList;
+	private ArrayList<BudgetPost> incomeBudgetPostList, expenceBudgetPostList;
 	
 	public Period(String name, ArrayList<BudgetPost> incomeBudgetPostList,
 			ArrayList<BudgetPost> expenceBudgetPostList)
@@ -24,6 +25,15 @@ public class Period
 		this.incomeBudgetPostList = new ArrayList<BudgetPost>();
 		this.expenceBudgetPostList = new ArrayList<BudgetPost>();
 	}
+	
+	public Object clone() throws java.lang.CloneNotSupportedException
+	{
+		Period period = (Period) super.clone();
+		period.expenceBudgetPostList = HelpFunctions.cloneBudgetPostList(expenceBudgetPostList);
+		period.incomeBudgetPostList = HelpFunctions.cloneBudgetPostList(incomeBudgetPostList);
+		
+		return period;
+	}
 
 	public String getName()
 	{
@@ -35,28 +45,29 @@ public class Period
 		this.name = name;
 	}
 
-	public List<BudgetPost> getIncomeBudgetPostList()
+	public ArrayList<BudgetPost> getIncomeBudgetPostList()
 	{
 		return incomeBudgetPostList;
 	}
 
-	public void setIncomeBudgetPostList(List<BudgetPost> incomeBudgetPostList) 
+	public void setIncomeBudgetPostList(ArrayList<BudgetPost> incomeBudgetPostList) 
 	{
 		this.incomeBudgetPostList = incomeBudgetPostList;
 	}
 
-	public List<BudgetPost> getExpenceBudgetPostList()
+	public ArrayList<BudgetPost> getExpenceBudgetPostList()
 	{
 		return expenceBudgetPostList;
 	}
 
-	public void setExpenceBudgetPostList(List<BudgetPost> expenceBudgetPostList)
+	public void setExpenceBudgetPostList(ArrayList<BudgetPost> expenceBudgetPostList)
 	{
 		this.expenceBudgetPostList = expenceBudgetPostList;
 	}
 	
 	public void addIncomeBudgetPost(BudgetPost bp)
 	{
+		
 		incomeBudgetPostList.add(bp);
 	}
 	
@@ -65,8 +76,14 @@ public class Period
 		expenceBudgetPostList.add(bp);
 	}
 	
-	public void deleteMarkedIncomeBudgetPosts()
+	public void deleteMarkedIncomeBudgetPosts(UserHandler uh)
 	{	
+		try {
+			uh.setLastUser((User) uh.getCurrentUser().clone());
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ArrayList<BudgetPost> tempList = new ArrayList<BudgetPost>();
 		for(int i = 0; i < incomeBudgetPostList.size(); i++)
 		{
@@ -79,8 +96,14 @@ public class Period
 		incomeBudgetPostList.removeAll(tempList);
 	}
 	
-	public void deleteMarkedExpenceBudgetPosts()
+	public void deleteMarkedExpenceBudgetPosts(UserHandler uh)
 	{
+		try {
+			uh.setLastUser((User) uh.getCurrentUser().clone());
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ArrayList<BudgetPost> tempList = new ArrayList<BudgetPost>();
 		for(int i = 0; i < expenceBudgetPostList.size(); i++)
 		{
@@ -93,8 +116,14 @@ public class Period
 		expenceBudgetPostList.removeAll(tempList);
 	}
 	
-	public void changeMarkedIncomeBudgetPosts()
+	public void changeMarkedIncomeBudgetPosts(UserHandler uh)
 	{
+		try {
+			uh.setLastUser((User) uh.getCurrentUser().clone());
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for(int i = 0; i < incomeBudgetPostList.size(); i++)
 		{
 			if(incomeBudgetPostList.get(i).isMarked()==true)
@@ -109,8 +138,14 @@ public class Period
 		}
 	}
 	
-	public void changeMarkedExpenceBudgetPosts()
+	public void changeMarkedExpenceBudgetPosts(UserHandler uh)
 	{
+		try {
+			uh.setLastUser((User) uh.getCurrentUser().clone());
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		for(int i = 0; i < expenceBudgetPostList.size(); i++)
 		{
 			if(expenceBudgetPostList.get(i).isMarked()==true)

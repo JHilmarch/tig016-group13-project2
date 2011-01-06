@@ -3,12 +3,14 @@ package gui;
 import gui.ScrollPanel.Type;
 
 import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.*;
 
 import model.UserHandler;
 
-public class MainFrame extends JFrame
+public class MainFrame extends JFrame implements WindowListener
 {
 	private static final long serialVersionUID = -4287347866047384672L;
 	
@@ -25,7 +27,9 @@ public class MainFrame extends JFrame
 		this.setLayout(new GridLayout(5,1));
 		this.setTitle("Grupp 13 - Budgeteringsverktyg");
 		this.setSize(400,600);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+		this.addWindowListener(this);
 		
 		menu = new Menu(uh);
 		this.setJMenuBar(menu);
@@ -53,5 +57,48 @@ public class MainFrame extends JFrame
 		mPanel.updateGUI(uh);
 		bPanel.updateGUI(uh);
 		menu.setMenuItems();
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e)
+	{
+		uh.saveProfileQuestion();
+			System.exit(0);
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

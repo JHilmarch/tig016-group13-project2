@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-public class Verification
+public class Verification implements Cloneable
 {
 	private GregorianCalendar timeStamp;
 	private String note;
@@ -34,6 +34,13 @@ public class Verification
 		this.timeStamp.setTime(trialTime);
 		this.note = note;
 		this.amount = amount;
+	}
+	
+	public Object clone() throws java.lang.CloneNotSupportedException
+	{
+		Verification verification = (Verification) super.clone();
+		verification.timeStamp = (GregorianCalendar) timeStamp.clone();
+		return verification;
 	}
 
 	public GregorianCalendar getTimeStamp()

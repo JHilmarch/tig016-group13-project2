@@ -13,6 +13,7 @@ import javax.swing.*;
 import util.HelpFunctions;
 
 import model.BudgetPost;
+import model.User;
 import model.UserHandler;
 import model.Verification;
 
@@ -44,7 +45,15 @@ public class ManageVerification extends JFrame implements ActionListener
 		typeBox.addActionListener(typeListener);
 		inputPanel.add(typeBox);
 		
-		selectedBudgetPost = uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList().get(0);
+		if(uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList().isEmpty())
+		{
+			selectedBudgetPost = uh.getCurrentUser().getCurrentPeriod().getExpenceBudgetPostList().get(0);
+		}
+		else
+		{
+			selectedBudgetPost = uh.getCurrentUser().getCurrentPeriod().getIncomeBudgetPostList().get(0);
+		}
+		
 		currentBudgetListType = Type.INCOME;
 		budgetPostBox = new JComboBox(this.getIncomeComboBoxModel());
 		budgetPostBox.addActionListener(postListener);
@@ -164,6 +173,13 @@ public class ManageVerification extends JFrame implements ActionListener
 				{
 					if(HelpFunctions.testInputAmount(amountField.getText()))
 					{
+						try {
+							uh.setLastUser((User) uh.getCurrentUser().clone());
+						} catch (CloneNotSupportedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
 						String[] splitedNumberText = amountField.getText().split(",");
 						double amount = Double.parseDouble(splitedNumberText[0] + "." + splitedNumberText[1]);
 						

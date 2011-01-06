@@ -11,6 +11,7 @@ import javax.swing.*;
 import util.HelpFunctions;
 
 import model.BudgetPost;
+import model.User;
 import model.UserHandler;
 import model.Verification;
 
@@ -22,13 +23,12 @@ public class NewVerificationPanel extends JFrame implements ActionListener
 	private JTextField noteField, amountField;
 	private JPanel inputPanel, buttonPanel;
 	private JButton okButton, cancelButton;
-	private TypeListener typeListener;
 	private UserHandler uh;
 	
 	public NewVerificationPanel(UserHandler uh)
 	{
 		this.uh = uh;
-		typeListener = new TypeListener(this);
+		TypeListener typeListener = new TypeListener(this);
 		this.setLayout(new FlowLayout());
 		
 		inputPanel = new JPanel();
@@ -131,11 +131,19 @@ public class NewVerificationPanel extends JFrame implements ActionListener
 		{
 			if(HelpFunctions.testInputAmount(amountField.getText()))
 			{
+				try {
+					uh.setLastUser((User) uh.getCurrentUser().clone());
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 				String[] splitedNumberText = amountField.getText().split(",");
 				double amount = Double.parseDouble(splitedNumberText[0] + "." + splitedNumberText[1]);
 				Verification ver = new Verification(noteField.getText(),amount);
 				bp.addVerification(ver);
 				bp.setOutcome();
+				uh.getCurrentUser().setName("Kolla");
 				uh.updateGUI();
 				this.dispose();
 			}
@@ -149,7 +157,7 @@ public class NewVerificationPanel extends JFrame implements ActionListener
 		}
 	}
 	
-	class MyComboBoxModel extends AbstractListModel implements ComboBoxModel
+	private class MyComboBoxModel extends AbstractListModel implements ComboBoxModel
 	{
 		private static final long serialVersionUID = 4891286126261237305L;
 		private Object[] budgetTextList;
@@ -183,7 +191,7 @@ public class NewVerificationPanel extends JFrame implements ActionListener
 		}
 	}
 	
-	class TypeListener implements ActionListener
+	private class TypeListener implements ActionListener
 	{
 		NewVerificationPanel verPanel;
 		public TypeListener(NewVerificationPanel verPanel)

@@ -11,6 +11,7 @@ import javax.swing.*;
 import util.HelpFunctions;
 
 import model.BudgetPost;
+import model.User;
 import model.UserHandler;
 import model.Verification;
 
@@ -70,6 +71,13 @@ public class NewBudgetPostPanel extends JFrame implements ActionListener
 		{
 			if(HelpFunctions.testInputAmount(amountField.getText()))
 			{
+				try {
+					uh.setLastUser((User) uh.getCurrentUser().clone());
+				} catch (CloneNotSupportedException exception) {
+					// TODO Auto-generated catch block
+					exception.printStackTrace();
+				}
+				
 				String[] splitedNumberText = amountField.getText().split(",");
 				double amount = Double.parseDouble(splitedNumberText[0] + "." + splitedNumberText[1]);
 				BudgetPost bp = new BudgetPost(nameField.getText(), amount, new ArrayList<Verification>());

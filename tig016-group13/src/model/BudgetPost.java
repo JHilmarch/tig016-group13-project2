@@ -1,15 +1,17 @@
 package model;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class BudgetPost
+import util.HelpFunctions;
+
+public class BudgetPost implements Cloneable
 {
 	private String name;
 	private double amount, outcome;
 	private boolean marked;
-	private List<Verification> verificationList;
+	private ArrayList<Verification> verificationList;
 	
-	public BudgetPost(String name, double amount, List<Verification> verificationList)
+	public BudgetPost(String name, double amount, ArrayList<Verification> verificationList)
 	{
 		this.name = name;
 		this.amount = amount;
@@ -20,7 +22,7 @@ public class BudgetPost
 	}
 
 	public BudgetPost(String name, double amount, double outcome,
-			List<Verification> verificationList)
+			ArrayList<Verification> verificationList)
 	{
 		super();
 		this.name = name;
@@ -29,6 +31,13 @@ public class BudgetPost
 		this.verificationList = verificationList;
 		setOutcome();
 		this.marked = false;
+	}
+	
+	public Object clone() throws java.lang.CloneNotSupportedException
+	{
+		BudgetPost budgetPost = (BudgetPost) super.clone();
+		budgetPost.verificationList = HelpFunctions.cloneVerificationList(verificationList);
+		return budgetPost;
 	}
 
 	public String getName()
@@ -79,12 +88,12 @@ public class BudgetPost
 		this.marked = marked;
 	}
 
-	public List<Verification> getVerificationList()
+	public ArrayList<Verification> getVerificationList()
 	{
 		return verificationList;
 	}
 
-	public void setVerificationList(List<Verification> verificationList)
+	public void setVerificationList(ArrayList<Verification> verificationList)
 	{
 		this.verificationList = verificationList;
 	}

@@ -1,5 +1,7 @@
 package model;
 
+import gui.LogMessage;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,7 +12,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 import javax.swing.JOptionPane;
@@ -32,24 +33,27 @@ import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-public class User
+import util.HelpFunctions;
+
+public class User implements Cloneable
 {
 	static
 	{
-		//creates tree structure.
+		//creates directory tree structure.
 		File file = new File("Save" + File.separator);
 		file.mkdirs();
 		file = null;
 	}
 	
 	private String name;
-	private List<URL> urlList;
-	private List<Period> periodList;
+	private ArrayList<URL> urlList;
+	private ArrayList<Period> periodList;
 	private Period currentPeriod;
 	private Document dom;
 	private boolean written, readed;
+	private StringBuilder log;
 	
-	public User(String name, List<URL> urlList, List<Period> periodList, Period currentPeriod)
+	public User(String name, ArrayList<URL> urlList, ArrayList<Period> periodList, Period currentPeriod)
 	{
 		this.name = name;
 		this.urlList = urlList;
@@ -57,9 +61,10 @@ public class User
 		this.currentPeriod = currentPeriod;
 		this.written = false;
 		this.readed = false;
+		this.log = new StringBuilder();
 	}
 	
-	public User(String name, List<URL> urlList, List<Period> periodList)
+	public User(String name, ArrayList<URL> urlList, ArrayList<Period> periodList)
 	{
 		this.name = name;
 		this.urlList = urlList;
@@ -67,8 +72,9 @@ public class User
 		this.currentPeriod = new Period("testPeriod");
 		this.written = false;
 		this.readed = false;
+		this.log = new StringBuilder();
 	}
-	public User(String name, List<Period> periodList)
+	public User(String name, ArrayList<Period> periodList)
 	{
 		this.name = name;
 		this.urlList = new ArrayList<URL>();
@@ -76,6 +82,7 @@ public class User
 		this.currentPeriod = new Period("testPeriod");
 		this.written = false;
 		this.readed = false;
+		this.log = new StringBuilder();
 	}
 	
 	public User()
@@ -86,6 +93,16 @@ public class User
 		this.currentPeriod = new Period("emptyPeriod");
 		this.written = false;
 		this.readed = false;
+		this.log = new StringBuilder();
+	}
+	
+	public Object clone() throws java.lang.CloneNotSupportedException
+	{
+		User user = (User) super.clone();
+		user.currentPeriod = (Period) currentPeriod.clone();
+		user.periodList = HelpFunctions.clonePeriodList(periodList);
+		//user.urlList = (ArrayList<URL>) urlList.clone();
+		return user;
 	}
 
 	public String getName()
@@ -98,22 +115,22 @@ public class User
 		this.name = name;
 	}
 
-	public List<URL> getUrlList()
+	public ArrayList<URL> getUrlList()
 	{
 		return urlList;
 	}
 
-	public void setUrlList(List<URL> urlList)
+	public void setUrlList(ArrayList<URL> urlList)
 	{
 		this.urlList = urlList;
 	}
 
-	public List<Period> getPeriodList()
+	public ArrayList<Period> getPeriodList()
 	{
 		return periodList;
 	}
 
-	public void setPeriodList(List<Period> periodList)
+	public void setPeriodList(ArrayList<Period> periodList)
 	{
 		this.periodList = periodList;
 	}
@@ -314,6 +331,7 @@ public class User
 	{
 		readed = true;
 		String userName = "";
+		log = new StringBuilder();
 		ArrayList<Period> listOfPeriods = new ArrayList<Period>();
 		User user = new User(userName,listOfPeriods);
 		
@@ -350,6 +368,15 @@ public class User
 		this.setCurrentPeriod(user.currentPeriod);
 		this.setPeriodList(user.periodList);
 		this.setUrlList(user.urlList);
+		
+		if(log.length() > 0)
+		{
+			log.append("------------------------\nVarningar behšver inte betyda att profilen har Šndrats" +
+					" \neller att nŒgonting Šr fel. " +
+					"Applikationen Šr under utveckling \noch inlŠsningsfunktionen skall testas ytterligare.");
+			LogMessage logMessage = new LogMessage(log.toString());
+		}
+		
 		return readed;
 	}
 	
@@ -374,8 +401,7 @@ public class User
             if(profileElement.getElementsByTagName("user").getLength()==0)
             {
             	readed = false;
-            	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden profile.\n" +
-            			"Profilen kan lŠsas in fel!","DOKUMENTVARNING!",JOptionPane.WARNING_MESSAGE);
+            	log.append("VARNING: Det saknas attribut i noden \"profile\".\n");
             }
                 
             else
@@ -407,8 +433,7 @@ public class User
         	if(urlsElement.getElementsByTagName("url").getLength()==0)
         	{
         		readed = false;
-            	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden urls.\n" +
-            			"Profilen kan lŠsas in fel!","URLSWARNING!",JOptionPane.WARNING_MESSAGE);
+            	log.append("VARNING: Det saknas attribut i noden \"urls\".\n");
         	}
         	
         	else
@@ -426,9 +451,7 @@ public class User
                         if(urlElement.getElementsByTagName("path").getLength()==0)
                         {
                         	readed = false;
-                        	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden path.\n" +
-                        			"Listan fšrblir tom.",
-                        			"URL-VARNING!",JOptionPane.WARNING_MESSAGE);
+                        	log.append("VARNING: Det saknas attribut i noden \"path\".\n");
                         }
                         
                         else
@@ -458,8 +481,7 @@ public class User
         	if(budgetPostsElement.getElementsByTagName("budgetPost").getLength()==0)
         	{
         		readed = false;
-            	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden budgetPost.\n" +
-            			"Profilen kan lŠsas in fel!","BUDGETPOSTVARNING!",JOptionPane.WARNING_MESSAGE);
+        		log.append("VARNING: Det saknas attribut i noden \"budgetPost\".\n");
         	}
         	
         	else
@@ -488,8 +510,7 @@ public class User
         		budgetElement.getElementsByTagName("verifications").getLength()==0)
         {
         	readed = false;
-        	JOptionPane.showMessageDialog(null, "Det saknas attribut i en budgetpost eller sŒ Šr listan tom.\n" +
-        			"En budgetpost kommer att lŠsas in tom!","BUDGETPOSTVARNING!",JOptionPane.WARNING_MESSAGE);
+        	log.append("VARNING: Det saknas attribut i en budgetpost eller sŒ Šr listan tom.\n");
         }
         
         else
@@ -509,8 +530,7 @@ public class User
             catch(Exception e)
             {
             	readed = false;
-            	JOptionPane.showMessageDialog(null, "Värdet \"amount\" Šr inte numeriskt!" +
-            			"Värdet skrivs till noll.","BUDGETPOSTVARNING!",JOptionPane.WARNING_MESSAGE);
+            	log.append("FEL: VŠrdet (Budgetpost) \"amount\" Šr inte numeriskt och skrivs till noll!.\n");
             	amount = 0;
             }
             
@@ -522,8 +542,7 @@ public class User
             catch(Exception e)
             {
             	readed = false;
-            	JOptionPane.showMessageDialog(null, "Fel i en budgetpost: VŠrdet \"outcome\" Šr inte numeriskt!" +
-            			"VŠrdet skrivs till noll.","BUDGETPOSTVARNING!",JOptionPane.WARNING_MESSAGE);
+            	log.append("FEL: VŠrdet (Budgetpost) \"outcome\" Šr inte numeriskt och skrivs till noll!.\n");
             	outcome = 0;
             }
         	
@@ -547,8 +566,7 @@ public class User
         	if(periodsElement.getElementsByTagName("period").getLength()==0)
         	{
         		readed = false;
-            	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden period.\n" +
-            			"Profilen kan lŠsas in fel!","PERIODVARNING!",JOptionPane.WARNING_MESSAGE);
+        		log.append("VARNING: Det saknas attribut i noden \"period\".\n");
         	}
         	
         	else
@@ -574,8 +592,7 @@ public class User
         if(periodElement.getElementsByTagName("name").getLength()==0)
         {
         	readed = false;
-        	JOptionPane.showMessageDialog(null, "Det saknas attribut i en period.\n" +
-        			"Perioden kommer att lŠsas in tom!","PERIODVARNING!",JOptionPane.WARNING_MESSAGE);
+        	log.append("VARNING: Det saknas attribut i en period.\n");
         }
         
         else
@@ -605,8 +622,7 @@ public class User
         	if(verificationsElement.getElementsByTagName("verification").getLength()==0)
         	{
         		readed = false;
-            	JOptionPane.showMessageDialog(null, "Det saknas attribut i noden verification.\n" +
-            			"Profilen kan lŠsas in fel!","VERIFIKATIONSVARNING!",JOptionPane.WARNING_MESSAGE);
+        		log.append("VARNING: Det saknas attribut i noden \"verification\".\n");
         	}
         	
         	else
@@ -635,8 +651,7 @@ public class User
         		verificationElement.getElementsByTagName("amount").getLength()==0)
         {
         	readed = false;
-        	JOptionPane.showMessageDialog(null, "Det saknas attribut en verifikation.\n" +
-        			"Verifikationen kommer att läsas in tom!","VERIFIKATIONSVARNING!",JOptionPane.WARNING_MESSAGE);
+        	log.append("VARNING: Det saknas attribut i en verifikation.\n");
         }
         
         else
@@ -653,8 +668,7 @@ public class User
             catch(Exception e)
             {
             	readed = false;
-            	JOptionPane.showMessageDialog(null, "Värdet \"timeStamp\" är inte numeriskt!" +
-            			"Värdet skrivs till noll.","VERIFIKATIONSVARNING!",JOptionPane.WARNING_MESSAGE);
+            	log.append("FEL: VŠrdet (Verifikation) \"timeStamp\" Šr inte numeriskt och skrivs dŠrfšr till noll!\n");
             	timeStampRepresentation = 0;
             }
             
@@ -666,8 +680,7 @@ public class User
             catch(Exception e)
             {
             	readed = false;
-            	JOptionPane.showMessageDialog(null, "Värdet \"amount\" är inte numeriskt!" +
-            			"Värdet skrivs till noll.","VERIFIKATIONSVARNING!",JOptionPane.WARNING_MESSAGE);
+            	log.append("FEL: VŠrdet (Verifikation) \"amount\" Šr inte numeriskt och skrivs dŠrfšr till noll!\n");
             	amount = 0;
             }
             
@@ -678,7 +691,7 @@ public class User
         return verification;
 	}
 	
-	public void createNewPeriod()
+	public void createNewPeriod(UserHandler uh)
 	{
 		String name = JOptionPane.showInputDialog("Var snŠll och mata in periodens namn: ");
 		
@@ -686,6 +699,12 @@ public class User
 		{
 			if(name.length() >= 1)
 			{
+				try {
+					uh.setLastUser((User) uh.getCurrentUser().clone());
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				Period period = new Period(name);
 				periodList.add(period);
 				setCurrentPeriod(period);
@@ -693,7 +712,7 @@ public class User
 		}
 	}
 	
-	public void openPeriod()
+	public void openPeriod(UserHandler uh)
 	{
 		Object[] data = new Object[periodList.size()];
 		for(int i = 0; i < periodList.size(); i++)
@@ -716,6 +735,12 @@ public class User
 			{
 				if(p.getName().equals(s))
 				{
+					try {
+						uh.setLastUser((User) uh.getCurrentUser().clone());
+					} catch (CloneNotSupportedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					setCurrentPeriod(p);
 				}
 			}

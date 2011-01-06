@@ -1,7 +1,7 @@
 package gui;
 
 import java.awt.GridLayout;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
@@ -15,7 +15,7 @@ public class ScrollPanel extends JPanel
 {
 	private static final long serialVersionUID = -8739894531881597846L;
 	private JTable table;
-	private List<BudgetPost> budgetPosts;
+	private ArrayList<BudgetPost> budgetPosts;
 	private Type type;
 	private UserHandler uh;
 	
@@ -24,7 +24,7 @@ public class ScrollPanel extends JPanel
 		INCOME, EXPENCES
 	}
 
-	public ScrollPanel(UserHandler uh, List<BudgetPost> budgetPosts, Type type)
+	public ScrollPanel(UserHandler uh, ArrayList<BudgetPost> budgetPosts, Type type)
 	{
 		this.uh = uh;
 		this.type = type;
@@ -51,9 +51,9 @@ public class ScrollPanel extends JPanel
 	
 	private class BooleanTableModel extends AbstractTableModel implements TableModelListener
 	{
-		List<BudgetPost> ver;
+		ArrayList<BudgetPost> ver;
 		Object[][] data;
-		public BooleanTableModel(List<BudgetPost> ver)
+		public BooleanTableModel(ArrayList<BudgetPost> ver)
 		{
 			this.addTableModelListener(this);
 			this.ver = ver;

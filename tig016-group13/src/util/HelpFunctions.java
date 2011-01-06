@@ -2,9 +2,14 @@ package util;
 
 import java.awt.Desktop;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.JOptionPane;
+
+import model.BudgetPost;
+import model.Period;
+import model.Verification;
 
 public class HelpFunctions
 {
@@ -113,5 +118,26 @@ public class HelpFunctions
 		{
 			System.out.println("Error" + e );
 		}
+	}
+	
+	public static ArrayList<BudgetPost> cloneBudgetPostList(ArrayList<BudgetPost> list) throws CloneNotSupportedException
+	{
+	    ArrayList<BudgetPost> clone = new ArrayList<BudgetPost>(list.size());
+	    for(BudgetPost item: list) clone.add((BudgetPost) item.clone());
+	    return clone;
+	}
+	
+	public static ArrayList<Verification> cloneVerificationList(ArrayList<Verification> list) throws CloneNotSupportedException
+	{
+	    ArrayList<Verification> clone = new ArrayList<Verification>(list.size());
+	    for(Verification item: list) clone.add((Verification) item.clone());
+	    return clone;
+	}
+	
+	public static ArrayList<Period> clonePeriodList(ArrayList<Period> list) throws CloneNotSupportedException
+	{
+	    ArrayList<Period> clone = new ArrayList<Period>(list.size());
+	    for(Period item: list) clone.add((Period) item.clone());
+	    return clone;
 	}
 }
