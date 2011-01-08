@@ -7,7 +7,7 @@ Prioritet: Låg-Normal-Hög
 
 Profil
 
-Öppna profil - Normal IMPLEMENTERAT (Buggar vid tomma listor) 
+Öppna profil - Normal IMPLEMENTERAT (kanske buggar vid tomma listor) 
 	Skapa profil - Låg IMPLEMENTERAD
 
 Spara profil till disk- Låg IMPLEMENTERAD
