@@ -43,7 +43,7 @@ Ta bort budgetpost(er) - Hög IMPLEMENTERAD
 
 Hämta budgetposter - Låg
 
-Skriv budget till fil - Låg
+Skriv budget till fil - Låg IMPLEMENTERAD
 
 Hjälp
 
