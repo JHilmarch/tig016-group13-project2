@@ -839,7 +839,7 @@ public class User implements Cloneable
 				}
 				 
 				sb.append("\n\nSammanställt utgifter och inkomster:\nBelopp: " + df.format(totalIncomeAmount - totalExpenceAmount) +
-						"\tUtfall: " + df.format(totalExpenceOutcome - totalExpenceOutcome) + "\n----");
+						"\tUtfall: " + df.format(totalIncomeOutcome - totalExpenceOutcome) + "\n----");
 						 
 			}
 			 

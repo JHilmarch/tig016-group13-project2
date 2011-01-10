@@ -88,7 +88,7 @@ public class ManageVerification extends JFrame implements ActionListener
 		this.add(buttonPanel);
 		
 		this.setSize(200, 220);
-		this.setTitle("Notera händelse");
+		this.setTitle("Redigera h‰ndelse");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setAlwaysOnTop(true);
