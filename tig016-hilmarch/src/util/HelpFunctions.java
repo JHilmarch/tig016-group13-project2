@@ -10,7 +10,12 @@ import javax.swing.JOptionPane;
 import model.BudgetPost;
 import model.Period;
 import model.Verification;
-
+/*
+ * TIG061 H10 MDI - IT-universitetet i Gšteborg
+ * @version Prototyp 3
+ * @author Jonatan Hilmarch
+ * hilmarch@skip.chalmers.se
+ */
 public class HelpFunctions
 {
 	public static boolean testInputDecimalAmount(String amountFieldText)

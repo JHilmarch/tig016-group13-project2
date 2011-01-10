@@ -17,6 +17,12 @@ import model.User;
 import model.UserHandler;
 import model.Verification;
 
+/*
+ * TIG061 H10 MDI - IT-universitetet i Göteborg
+ * @version Prototyp 3
+ * @author Jonatan Hilmarch
+ * hilmarch@skip.chalmers.se
+ */
 public class ManageVerification extends JFrame implements ActionListener
 {
 	private static final long serialVersionUID = -5192337754141104694L;
@@ -65,7 +71,7 @@ public class ManageVerification extends JFrame implements ActionListener
 		noteField = new JTextField("notering");
 		inputPanel.add(noteField);
 
-		amountField = new JTextField("Belopp med komma");
+		amountField = new JTextField("Belopp");
 		inputPanel.add(amountField);
 		
 		this.add(inputPanel);
@@ -85,6 +91,7 @@ public class ManageVerification extends JFrame implements ActionListener
 		this.setTitle("Notera händelse");
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setAlwaysOnTop(true);
 		this.setVisible(true);
 	}
 

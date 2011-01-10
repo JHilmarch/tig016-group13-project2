@@ -11,6 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+/*
+ * TIG061 H10 MDI - IT-universitetet i Gšteborg
+ * @version Prototyp 3
+ * @author Jonatan Hilmarch
+ * hilmarch@skip.chalmers.se
+ */
 public class LogMessage extends JFrame implements ActionListener
 {	
 	private static final long serialVersionUID = -1929119798833123151L;
@@ -39,6 +45,7 @@ public class LogMessage extends JFrame implements ActionListener
 		this.setTitle(title);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+		this.setAlwaysOnTop(true);
 	}
 
 	public void actionPerformed(ActionEvent e)

@@ -8,6 +8,12 @@ import javax.swing.*;
 
 import model.UserHandler;
 
+/*
+ * TIG061 H10 MDI - IT-universitetet i Gšteborg
+ * @version Prototyp 3
+ * @author Jonatan Hilmarch
+ * hilmarch@skip.chalmers.se
+ */
 public class MiddlePanel extends JPanel
 {
 	private static final long serialVersionUID = -4696796014681020374L;

@@ -8,6 +8,12 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+/*
+ * TIG061 H10 MDI - IT-universitetet i Göteborg
+ * @version Prototyp 3
+ * @author Jonatan Hilmarch
+ * hilmarch@skip.chalmers.se
+ */
 public class UserHandler
 {
 	private MainFrame mainframe;
@@ -129,6 +135,53 @@ public class UserHandler
 		}
 		return open;
 	}
+	
+	/*
+	 * TODO implement
+	 * 
+	 * public boolean getProfileFromNetwork() throws HeadlessException, MalformedURLException
+	{
+		boolean readed = false;
+		
+		URL url = new URL(JOptionPane.showInputDialog("Var vänlig och mata in en url-adress:\n" +
+		"(t.ex. "));
+		
+		try
+		{
+			DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+		    DocumentBuilder docBuilder;
+			docBuilder = docBuilderFactory.newDocumentBuilder();
+			InputStream stream = url.openStream();
+			if(stream.available()!=0)
+			{
+				try {
+					setLastUser((User) getCurrentUser().clone());
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				Document doc = docBuilder.parse(stream);
+				User user = new User();
+			    user.readDocument(doc);
+			    System.out.println(user.getName());
+			    currentUser = user;
+			    readed = true;
+			}
+		}
+		catch (ParserConfigurationException e)
+		{
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return readed;
+	}*/
 	
 	public boolean newProfile()
 	{

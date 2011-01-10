@@ -5,6 +5,12 @@ import java.util.ArrayList;
 
 import util.HelpFunctions;
 
+/*
+ * TIG061 H10 MDI - IT-universitetet i Gšteborg
+ * @version Prototyp 3
+ * @author Jonatan Hilmarch
+ * hilmarch@skip.chalmers.se
+ */
 public class BudgetPost implements Cloneable
 {
 	private String name;

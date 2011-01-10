@@ -10,6 +10,12 @@ import javax.swing.*;
 
 import model.UserHandler;
 
+/*
+ * TIG061 H10 MDI - IT-universitetet i Gšteborg
+ * @version Prototyp 3
+ * @author Jonatan Hilmarch
+ * hilmarch@skip.chalmers.se
+ */
 public class MainFrame extends JFrame implements WindowListener
 {
 	private static final long serialVersionUID = -4287347866047384672L;
@@ -25,7 +31,7 @@ public class MainFrame extends JFrame implements WindowListener
 	{
 		this.uh = uh;
 		this.setLayout(new GridLayout(5,1));
-		this.setTitle("Grupp 13 - Budgeteringsverktyg");
+		this.setTitle("JHilmarch - Budgeteringsverktyg");
 		this.setSize(400,600);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 

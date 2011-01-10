@@ -11,13 +11,19 @@ import model.BudgetPost;
 import model.User;
 import model.UserHandler;
 
+/*
+ * TIG061 H10 MDI - IT-universitetet i Gšteborg
+ * @version Prototyp 3
+ * @author Jonatan Hilmarch
+ * hilmarch@skip.chalmers.se
+ */
 public class Menu extends JMenuBar implements ActionListener
 {
 	private static final long serialVersionUID = -5617155576631422259L;
 	
 	private JMenu mnArkiv, mnPeriod, mnEManager, mnRedigera, mnHjlp,mnUndo;
 	private JMenuItem mntmOpenProfile, mntmNewProfile, mntmSaveProfileToDisk, 
-	mntmSaveProfileToNetwork, mntmCloseProfile, mntmCreatePeriod, mntmDeleteVerification,
+	mntmGetProfileFromNetwork, mntmCloseProfile, mntmCreatePeriod, mntmDeleteVerification,
 	mntmOpenPeriod, mntmDeletePeriod, mntmRegisterVerification,
 	mntmChangeVerification, mntmWriteVerificationsToFile,
 	mntmAddBudgetPost, mntmChangeBudgetPost,
@@ -38,6 +44,10 @@ public class Menu extends JMenuBar implements ActionListener
 		mntmOpenProfile.addActionListener(profileListener);
 		mnArkiv.add(mntmOpenProfile);
 		
+		/*mntmGetProfileFromNetwork = new JMenuItem("\u00D6ppna fr\u00E5n n\u00E4tverk");
+		mntmGetProfileFromNetwork.addActionListener(profileListener);
+		mnArkiv.add(mntmGetProfileFromNetwork);*/
+		
 		mntmNewProfile = new JMenuItem("Skapa ny");
 		mntmNewProfile.addActionListener(profileListener);
 		mnArkiv.add(mntmNewProfile);
@@ -45,6 +55,7 @@ public class Menu extends JMenuBar implements ActionListener
 		mntmSaveProfileToDisk = new JMenuItem("Spara till disk");
 		mntmSaveProfileToDisk.addActionListener(profileListener);
 		mnArkiv.add(mntmSaveProfileToDisk);
+		
 		
 		mntmCloseProfile = new JMenuItem("St\u00E4ng");
 		mntmCloseProfile.addActionListener(profileListener);
@@ -224,6 +235,11 @@ public class Menu extends JMenuBar implements ActionListener
 					profileOpen = true;
 					setMenuItems();
 				}
+			}
+			
+			if(e.getActionCommand().equals("\u00D6ppna fr\u00E5n n\u00E4tverk"))
+			{
+				// TODO Implement
 			}
 			
 			else if(e.getActionCommand().equals("Skapa ny"))

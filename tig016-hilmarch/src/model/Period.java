@@ -6,6 +6,12 @@ import javax.swing.JOptionPane;
 
 import util.HelpFunctions;
 
+/*
+ * TIG061 H10 MDI - IT-universitetet i Gšteborg
+ * @version Prototyp 3
+ * @author Jonatan Hilmarch
+ * hilmarch@skip.chalmers.se
+ */
 public class Period implements Cloneable
 {
 	private String name;
