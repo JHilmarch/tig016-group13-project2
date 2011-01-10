@@ -44,12 +44,10 @@ public class NewBudgetPostPanel extends JFrame implements ActionListener
 		typeBox = new JComboBox(typeText);
 		inputPanel.add(typeBox);
 		
-		nameField = new JTextField();
-		nameField.setToolTipText("Postnamn");
+		nameField = new JTextField("Postnamn");
 		inputPanel.add(nameField);
 
-		amountField = new JTextField();
-		amountField.setToolTipText("Belopp");
+		amountField = new JTextField("Belopp");
 		inputPanel.add(amountField);
 		
 		this.add(inputPanel);

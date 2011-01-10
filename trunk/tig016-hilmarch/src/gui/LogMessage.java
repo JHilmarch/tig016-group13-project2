@@ -30,7 +30,7 @@ public class LogMessage extends JFrame implements ActionListener
 		textArea = new JTextArea(10, 30);
 		textArea.setText(text);
 		scrollPane = new JScrollPane(textArea);
-		scrollPane.setPreferredSize(new Dimension(520,280));
+		scrollPane.setPreferredSize(new Dimension(500,260));
 		
 		okButton = new JButton("OK");
 		okButton.addActionListener(this);

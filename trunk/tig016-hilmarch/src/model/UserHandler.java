@@ -118,6 +118,7 @@ public class UserHandler
 				{
 					JOptionPane.showMessageDialog(null, "En profil lästes in utan fel eller varningar!");
 				}
+				System.out.println(currentUser.getPeriodList().size());
 			}
 		}
 		
